@@ -32,7 +32,15 @@
     <InterpreterReference Include="Global|VisualStudio|SQLServer2017PythonSvcs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Fix.cmd" />
+    <Content Include="Misc\Fix.cmd" />
+    <Content Include="Misc\Install-MLModels.ps1" />
+    <Content Include="Misc\Install-PyForMLS.ps1" />
+    <Content Include="Misc\microsoft-machine-learning-algorithm-cheat-sheet-v6.pdf" />
+    <Content Include="SQLMLVersions-Troubleshooting.sql" />
+    <Content Include="SQLServerScripts.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Misc\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
