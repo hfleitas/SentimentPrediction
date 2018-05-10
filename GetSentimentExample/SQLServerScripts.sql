@@ -271,3 +271,4 @@ GO
 EXECUTE [dbo].[predict_review_sentiment] 
 GO
 --EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
+--fixed by seeing actual output using print(result) in messages tab.
