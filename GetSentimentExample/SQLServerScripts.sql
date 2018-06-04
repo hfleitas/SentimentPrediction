@@ -15,6 +15,7 @@ declare @sql nvarchar(max)
 select @sql = 'grant EXECUTE ANY EXTERNAL SCRIPT to ['+ @@servername +'\SQLRUserGroup]'
 print @sql; exec sp_executesql @sql
 go
+-- RESTART SQL Svc & LAUNCHPAD.
 
 -- install pre-trained models with MLWin930 https://docs.microsoft.com/en-us/sql/advanced-analytics/r/install-pretrained-models-sql-server?view=sql-server-2017
 -- upgrade/bind instance https://docs.microsoft.com/en-us/sql/advanced-analytics/r/use-sqlbindr-exe-to-upgrade-an-instance-of-sql-server?view=sql-server-2017
