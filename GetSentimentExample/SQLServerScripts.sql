@@ -4,11 +4,15 @@
 --  | 1. restore sample db. |
 --  + --------------------- +
 --The database used for this sample can be downloaded here: https://sqlchoice.blob.core.windows.net/sqlchoice/static/tpcxbb_1gb.bak
-restore database [tpcxbb_1gb] from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak'
+restore filelistonly from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak'
+go
+restore database [tpcxbb_1gb] from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak' with replace,
+move 'tpcxbb_1gb' to 'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.mdf', 
+move 'tpcxbb_1gb_log' to 'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.ldf'
 go
 alter database [tpcxbb_1gb] set COMPATIBILITY_LEVEL = 140
 GO
-EXEC sp_configure  'external scripts enabled', 1
+EXEC sp_configure 'external scripts enabled', 1
 RECONFIGURE WITH OVERRIDE
 go
 declare @sql nvarchar(max)
