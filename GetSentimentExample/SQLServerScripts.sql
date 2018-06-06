@@ -230,3 +230,17 @@ EXECUTE [dbo].[predict_review_sentiment]
 GO
 --EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
 --fixed by seeing actual output using print(result) in messages tab.
+create or alter proc uspPredictSentiment as
+begin
+	declare @model_bin varbinary(max);
+	select @model_bin = model from dbo.models where model_name = 'rx_logistic_regression' and language = 'Python';
+	
+	select	p.*
+	from	predict(model=@model_bin, data = product_reviews_test_data as d)
+	with	(pr_review_content nvarchar(max), score float) as p;
+end
+go
+exec uspPredictSentiment
+-- That model is an mml model (Microsoft ML). And PREDICT does not support mml models at this time.
+/*Msg 39051, Level 16, State 2, Procedure uspPredictSentiment, Line 250
+Error occurred during execution of the builtin function 'PREDICT' with HRESULT 0x80070057. Model is corrupt or invalid.*/
