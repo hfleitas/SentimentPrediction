@@ -19,12 +19,16 @@ declare @sql nvarchar(max)
 select @sql = 'grant EXECUTE ANY EXTERNAL SCRIPT to ['+ @@servername +'\SQLRUserGroup]'
 print @sql; exec sp_executesql @sql
 go
--- RESTART SQL Svc & LAUNCHPAD.
+-- Restart SQL Service & LAUNCHPAD.
+-- Run PS as admin: .\Install-MLModels.ps1 MSSQLSERVER
+-- Install Latest SQL Server CU, Reboot.
+-- Run CMD as admin: FixPath.cmd
+-- Verify WORKING_DIRECTORY in ...\MSSQL\Binn\pythonlauncher.config 
+-- Run CMD as admin: AddToSQL-PreTrainedModels.cmd. It downloads & installs the pre-trained models.
 
--- install pre-trained models with MLWin930 https://docs.microsoft.com/en-us/sql/advanced-analytics/r/install-pretrained-models-sql-server?view=sql-server-2017
--- upgrade/bind instance https://docs.microsoft.com/en-us/sql/advanced-analytics/r/use-sqlbindr-exe-to-upgrade-an-instance-of-sql-server?view=sql-server-2017
--- install python libraries interpreter https://docs.microsoft.com/en-us/machine-learning-server/install/python-libraries-interpreter
--- run fix cmd to correct working dir in config: C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\Binn\pythonlauncher.config
+/* Other Notes*/
+-- upgrade/bind instance https://docs.microsoft.com/sql/advanced-analytics/r/use-sqlbindr-exe-to-upgrade-an-instance-of-sql-server
+-- install python libraries interpreter https://docs.microsoft.com/machine-learning-server/install/python-libraries-interpreter
 
 --  + ------------------------ +
 --  | 2. use pre-trained model | 
@@ -68,64 +72,23 @@ GO
 --  | 3. Test the proc |
 --  + -----------------+
 -- The below examples test a negative and a positive review text
--- Negative review
 exec [get_sentiment] N'These are not a normal stress reliever. First of all, they got sticky, hairy and dirty on the first day I received them. Second, they arrived with tiny wrinkles in their bodies and they were cold. Third, their paint started coming off. Fourth when they finally warmed up they started to stick together. Last, I thought they would be foam but, they are a sticky rubber. If these were not rubber, this review would not be so bad.';
-go
---Positive review
+go --0.424483060836792	Negative
 exec [get_sentiment] N'These are the cutest things ever!! Super fun to play with and the best part is that it lasts for a really long time. So far these have been thrown all over the place with so many of my friends asking to borrow them because they are so fun to play with. Super soft and squishy just the perfect toy for all ages.'
-go
-
--- Create stored procedure that uses a pre-trained model to determine sentiment of a given text
-drop proc if exists get_sentiment_hiram
-go
-
-CREATE OR ALTER PROCEDURE [dbo].[getSentiment2] (@text NVARCHAR(MAX)) 
-AS
-BEGIN
- DECLARE  @script nvarchar(max);
- 
- --The Python script we want to execute
- SET @script = N'
-import numpy
-import pandas
-from microsoftml import rx_logistic_regression, rx_featurize, rx_predict, get_sentiment
-
-analyze_this = text
-
-# Create the data
-customer_reviews = pandas.DataFrame(data=dict(review=[analyze_this]))
-
-# Get the sentiment scores
-sentiment_scores = rx_featurize(
-    data=customer_reviews,
-    ml_transforms=[get_sentiment(cols=dict(scores="review"))])
-
-sentiment_scores["eval"] = sentiment_scores.scores.apply(
-            lambda score: "Positive" if score > 0.6 else "Negative")
-';
- 
- EXECUTE sp_execute_external_script
-    @language = N'Python'
-    , @script = @script
-    , @output_data_1_name = N'sentiment_scores'
-    , @params = N'@text nvarchar(max)'
-    , @text = @text
-    WITH RESULT SETS (("Text" NVARCHAR(MAX),"Score" FLOAT, "eval" NVARCHAR(30)));   
-END    
-GO
-
-exec [getSentiment2] N'I really did not like the taste of it'
-exec [getSentiment2] N'It was surprisingly quite good!'
-exec [getSentiment2] N'I will never ever ever go to that place again!!'
-
-exec [getSentiment2] N'Para cojer pescao hay que mojarse el culo.' --0.5, Neg
-exec [getSentiment2] N'El que quiera peces, que se moje el culo.' --0.5, Neg
+go --0.869342148303986	Positive
+exec [get_sentiment] N'I really did not like the taste of it' 
+go --0.46178987622261	Negative
+exec [get_sentiment] N'It was surprisingly quite good!'
+go --0.960192441940308	Positive
+exec [get_sentiment] N'I will never ever ever go to that place again!!' 
+go --0.310343533754349	Negative
+exec [get_sentiment] N'Destiny is a gift. Some go their entire lives, living existence as a quiet desperation. Never learning the truth that what feels as though a burden pushing down upon our shoulders, is actually, a sense of purpose that lifts us to greater heights. Never forget that fear is but the precursor to valor, that to strive and triumph in the face of fear, is what it means to be a hero. Don''t think, Master Jim. Become!'
+go --0.5	Negative. Why...Not enough?
 -- https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/ 
--- Language: Spanish, Key phrases: cojer pescao, culo. Sentiment: 27%.
+-- Language: English, Sentiment: 78%.
+-- Key phrases: face of fear, existence, triumph, valor, sense of purpose, entire lives, quiet desperation, shoulders, greater heights, precursor, Destiny, gift, Master Jim, burden, truth, hero. 
 
-exec [getSentiment2] N'To catch fish you have to wet your ass.' --0.687393844127655, Pos
-exec [getSentiment2] N'Whoever wants fish, gets his ass wet.' --0.420210421085358, Neg
-go
+
 
 --  + ------------------------------------ +
 --  | 4. create schema to train own model. |
@@ -143,11 +106,7 @@ CREATE TABLE [dbo].[models](
  [model] [varbinary](max) NOT NULL,
  [create_time] [datetime2](7) NULL DEFAULT (sysdatetime()),
  [created_by] [nvarchar](500) NULL DEFAULT (suser_sname()),
- PRIMARY KEY CLUSTERED 
- (
- [language],
- [model_name]
- )
+ PRIMARY KEY CLUSTERED  ( [language], [model_name] )
 )
 GO
 
@@ -163,8 +122,7 @@ SELECT TOP(CAST( ( SELECT COUNT(*) FROM   product_reviews)*.9 AS INT))
   CASE 
    WHEN pr_review_rating <3 THEN 1 
    WHEN pr_review_rating =3 THEN 2 
-   ELSE 3 
-  END AS tag 
+   ELSE 3 END AS tag 
 FROM   product_reviews;
 GO
 
@@ -175,19 +133,16 @@ SELECT TOP(CAST( ( SELECT COUNT(*) FROM   product_reviews)*.1 AS INT))
   CASE 
    WHEN pr_review_rating <3 THEN 1 
    WHEN pr_review_rating =3 THEN 2 
-   ELSE 3 
-  END AS tag 
+   ELSE 3 END AS tag 
 FROM   product_reviews;
 GO
 
--- STEP 3 Create a stored procedure for training a
--- text classifier model for product review sentiment classification (Positive, Negative, Neutral)
+-- STEP 3 Create a stored procedure for training a text classifier model for product review sentiment classification (Positive, Negative, Neutral)
 -- 1 = Negative, 2 = Neutral, 3 = Positive
 CREATE OR ALTER PROCEDURE [dbo].[create_text_classification_model]
 AS
 BEGIN
- DECLARE   @model varbinary(max)
-   , @train_script nvarchar(max);
+ DECLARE @model varbinary(max), @train_script nvarchar(max);
  --The Python script we want to execute
  SET @train_script = N'
 ##Import necessary packages
@@ -227,19 +182,13 @@ EXECUTE [dbo].[create_text_classification_model];
 SELECT * FROM dbo.models;
 GO
 
--- STEP 5 --Stored procedure that uses the model we just created to predict/classify the sentiment of product reviews
-CREATE OR ALTER PROCEDURE [dbo].[predict_review_sentiment]
-AS
+-- STEP 5 --Proc that uses the model we just created to predict/classify the sentiment of product reviews
+CREATE OR ALTER PROCEDURE [dbo].[predict_review_sentiment] AS
 BEGIN
  -- text classifier for online review sentiment classification (Positive, Negative, Neutral)
- DECLARE 
-    @model_bin varbinary(max)
-   , @prediction_script nvarchar(max);
+ DECLARE @model_bin varbinary(max), @prediction_script nvarchar(max);
+ SELECT @model_bin = model from dbo.models WHERE model_name = 'rx_logistic_regression' and language = 'Python';
  
- -- Select the model binary object from the model table
- SET @model_bin = (select model from dbo.models WHERE model_name = 'rx_logistic_regression' and language = 'Python');
- 
-
  --The Python script we want to execute
  SET @prediction_script = N'
 from microsoftml import rx_predict
@@ -268,11 +217,15 @@ result = rx_data_step(predictions)
     , @output_data_1_name = N'result'
     , @params  = N'@model_bin varbinary(max)'
     , @model_bin = @model_bin
-  WITH RESULT SETS (("Review" NVARCHAR(MAX), "PredictedLabel" FLOAT, "Predicted_Score_Negative" FLOAT, "Predicted_Score_Neutral" FLOAT, "Predicted_Score_Positive" FLOAT)); --added PredictedLablel (seen i msgs tab with print(result)).
+  WITH RESULT SETS (("Review" NVARCHAR(MAX), "PredictedLabel" FLOAT, "Predicted_Score_Negative" FLOAT, "Predicted_Score_Neutral" FLOAT, "Predicted_Score_Positive" FLOAT)); 
 END 
 GO
+--added PredictedLablel (seen msgs tab with print(result)).
+--use print(result) to see dataframe columns to match result set columns.
 
 -- STEP 6 Execute the multi class prediction using the model we trained earlier
+-- The predicted score of Negative means the statement is (x percent Negative), and so on for the other sentiment categories. 
+-- Ie. since the’re all tag 3 positive, they will have very low negative scores, low neutral scores and very high positive scores. 
 EXECUTE [dbo].[predict_review_sentiment] 
 GO
 --EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
