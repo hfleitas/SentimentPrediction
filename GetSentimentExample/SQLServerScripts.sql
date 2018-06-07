@@ -83,12 +83,11 @@ go --0.960192441940308	Positive
 exec [get_sentiment] N'I will never ever ever go to that place again!!' 
 go --0.310343533754349	Negative
 exec [get_sentiment] N'Destiny is a gift. Some go their entire lives, living existence as a quiet desperation. Never learning the truth that what feels as though a burden pushing down upon our shoulders, is actually, a sense of purpose that lifts us to greater heights. Never forget that fear is but the precursor to valor, that to strive and triumph in the face of fear, is what it means to be a hero. Don''t think, Master Jim. Become!'
-go --0.5	Negative. Why...Not enough?
+--0.5	Negative. Why...Not enough?
 -- https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/ 
 -- Language: English, Sentiment: 78%.
 -- Key phrases: face of fear, existence, triumph, valor, sense of purpose, entire lives, quiet desperation, shoulders, greater heights, precursor, Destiny, gift, Master Jim, burden, truth, hero. 
-
-
+go
 
 --  + ------------------------------------ +
 --  | 4. create schema to train own model. |
@@ -227,13 +226,16 @@ GO
 -- The predicted score of Negative means the statement is (x percent Negative), and so on for the other sentiment categories. 
 -- Ie. since the’re all tag 3 positive, they will have very low negative scores, low neutral scores and very high positive scores. 
 EXECUTE [dbo].[predict_review_sentiment] 
-GO
 --EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
 --fixed by seeing actual output using print(result) in messages tab.
-create or alter proc uspPredictSentiment as
+go
+-- STEP 7 Use TSQL PREDICT with serialized model.
+create or alter proc uspPredictSentiment 
+@model varchar(30) = 'rx_logistic_regression'
+as
 begin
 	declare @model_bin varbinary(max);
-	select @model_bin = model from dbo.models where model_name = 'rx_logistic_regression' and language = 'Python';
+	select @model_bin = model from dbo.models where model_name = @model and language = 'Python';
 	
 	select	p.*
 	from	predict(model=@model_bin, data = product_reviews_test_data as d)
@@ -244,3 +246,65 @@ exec uspPredictSentiment
 -- That model is an mml model (Microsoft ML). And PREDICT does not support mml models at this time.
 /*Msg 39051, Level 16, State 2, Procedure uspPredictSentiment, Line 250
 Error occurred during execution of the builtin function 'PREDICT' with HRESULT 0x80070057. Model is corrupt or invalid.*/
+go
+-- STEP 8 Same proc to train but serialize model for realtimeScoringOnly.
+CREATE OR ALTER PROCEDURE [dbo].CreatePyModelRealtimeScoringOnly
+AS
+BEGIN
+ DECLARE @model varbinary(max), @train_script nvarchar(max);
+ --The Python script we want to execute
+ SET @train_script = N'
+##Import necessary packages
+from microsoftml import rx_logistic_regression,featurize_text, n_gram
+from revoscalepy import rx_serialize_model
+import pickle
+
+## Defining the tag column as a categorical type
+training_data["tag"] = training_data["tag"].astype("category")
+
+## Create a machine learning model for multiclass text classification. 
+## We are using a text featurizer function to split the text in features of 2-word chunks
+#ngramLength=2: include not only "Word1", "Word2", but also "Word1 Word2"
+#weighting="TfIdf": Term frequency & inverse document frequency
+
+modelpy = rx_logistic_regression(formula = "tag ~ features", data = training_data, method = "multiClass", ml_transforms=[
+                        featurize_text(language="English",
+                                     cols=dict(features="pr_review_content"),
+                                      word_feature_extractor=n_gram(2, weighting="TfIdf"))])
+
+## Serialize the model so that we can store it in a table, fails too with realtime_scoring_only = False
+model = rx_serialize_model(modelpy, realtime_scoring_only = True)
+modelbin = pickle.dumps(model)';
+
+ EXECUTE sp_execute_external_script
+      @language = N'Python'
+       , @script = @train_script
+       , @input_data_1 = N'SELECT * FROM product_reviews_training_data'
+       , @input_data_1_name = N'training_data'
+       , @params  = N'@modelbin varbinary(max) OUTPUT' 
+       , @modelbin = @model OUTPUT;
+ --Save model to DB Table      
+ DELETE FROM dbo.models WHERE model_name = 'realtime_scoring_only' and language = 'Python';
+ INSERT INTO dbo.models (language, model_name, model) VALUES('Python', 'realtime_scoring_only', @model);
+END;
+GO
+-- STEP 9 Execute the stored procedure that creates and saves the machine learning model in a table
+exec  CreatePyModelRealtimeScoringOnly;
+--Take a look at the model object saved in the model table
+SELECT * FROM dbo.models;
+GO
+-- STEP 10 Execute the multi class prediction using the realtime_scoring_only model we trained now.
+exec uspPredictSentiment @model='realtime_scoring_only'
+go
+/*Msg 39051, Level 16, State 2, Procedure uspPredictSentiment, Line 304
+Error occurred during execution of the builtin function 'PREDICT' with HRESULT 0x80070057. Model is corrupt or invalid.
+
+This is currently not supported.
+'rx_logistic_regression' is an algorithm from the mml package, not revoscalepy package.
+
+Cannot demo TSQL PREDICT with a model from 'rx_logistic_regression'.
+For now batch predictions by calling rx_predict. 
+
+Use another example instead for native scoring. This sample is good for showing PREDICT:
+https://github.com/Microsoft/r-server-hospital-length-of-stay
+*/
