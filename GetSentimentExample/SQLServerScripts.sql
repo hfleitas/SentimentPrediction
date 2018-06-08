@@ -343,19 +343,4 @@ System.InvalidOperationException:
    at Microsoft.MachineLearning.RServerScoring.Model.Score(IDataTable inputData)
    at Microsoft.MachineLearning.RServerScoring.Scorer.Score(IModel model, IDataTable inputData, IDictionary`2 scoringParameters, IScoreContext scoreContext)
    at Microsoft.RServer.ScoringLibrary.ScoringHost.ScoreDispatcher.Score(ModelId modelId, IDataTable inputData, IDictionary`2 scoringParameters, IScoreContext scoreContext)
-=======
-declare @model_bin varbinary(max) = null
-select	@model_bin = model from models where model_name = 'realtime_scoring_only';
-if @model_bin <> null begin
-exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT * FROM product_reviews_training_data' end;
-go
---Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
-/*Msg 6522, Level 16, State 1, Procedure sp_rxPredict, Line 321
-A .NET Framework error occurred during execution of user-defined routine or aggregate "sp_rxPredict": 
-Microsoft.RServer.ScoringLibrary.ScoringHost.InvalidModelStreamException: Real-time Scoring not supported for model. Model of size -226872601 bytes in model stream.
-Microsoft.RServer.ScoringLibrary.ScoringHost.InvalidModelStreamException: 
-   at Microsoft.RServer.ScoringLibrary.ScoringHost.StreamHeader..ctor(Stream stream)
-   at Microsoft.RServer.ScoringLibrary.ScoringHost.ScoreDispatcher.LoadModel(Stream modelStream)
->>>>>>> 98ea442094a816d923b0e98056cc45d1d7ad9052
-   at StoredProcedures.sp_rxPredict(SqlBytes model, SqlString inputDataQuery)
 .*/
