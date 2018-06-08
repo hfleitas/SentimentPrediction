@@ -330,7 +330,7 @@ go
 -- Run cmd as admin: EnableRealtimePredictions.cmd
 declare @model_bin varbinary(max)=null
 select	@model_bin = model from models where model_name = 'RevoMMLRealtimeScoring';
-if @model_bin <> null begin
+if @model_bin is not null begin
 exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT * FROM product_reviews_training_data' end;
 go
 --Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
