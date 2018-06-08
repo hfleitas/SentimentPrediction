@@ -308,3 +308,19 @@ For now batch predictions by calling rx_predict.
 Use another example instead for native scoring. This sample is good for showing PREDICT:
 https://github.com/Microsoft/r-server-hospital-length-of-stay
 */
+-- Try sp_rxPredict, if missing, enable it: https://docs.microsoft.com/en-us/sql/advanced-analytics/r/how-to-do-realtime-scoring?view=sql-server-2017#bkmk_enableRtScoring
+sp_configure 'show advanced options', 1;  
+reconfigure;
+go
+sp_configure 'clr enabled', 1;  
+reconfigure with override;
+go  
+alter database tpcxbb_1gb set trustworthy on; 
+exec sp_changedbowner @loginame = sa, @map = false;
+go
+-- Run cmd as admin: EnableRealtimePredictions.cmd
+declare @model_bin varbinary(max)
+select	@model_bin = model from models where model_name = 'realtime_scoring_only';
+exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT * FROM product_reviews_training_data';
+go
+--Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.

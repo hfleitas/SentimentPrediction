@@ -33,8 +33,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Misc\AddToSQL-PreTrainedModels.cmd" />
+    <Content Include="Misc\EnableRealtimePredictions.cmd" />
     <Content Include="Misc\FixPath.cmd" />
-    <Content Include="Misc\GetSentimentExample_20180606.vsp" />
+    <Content Include="Misc\Performance_20180606.vsp" />
     <Content Include="Misc\Install-MLModels.ps1" />
     <Content Include="Misc\Install-PyForMLS.ps1" />
     <Content Include="Misc\microsoft-machine-learning-algorithm-cheat-sheet-v6.pdf" />
