@@ -319,8 +319,17 @@ alter database tpcxbb_1gb set trustworthy on;
 exec sp_changedbowner @loginame = sa, @map = false;
 go
 -- Run cmd as admin: EnableRealtimePredictions.cmd
-declare @model_bin varbinary(max)
+declare @model_bin varbinary(max) = null
 select	@model_bin = model from models where model_name = 'realtime_scoring_only';
-exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT * FROM product_reviews_training_data';
+if @model_bin <> null begin
+exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT * FROM product_reviews_training_data' end;
 go
 --Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
+/*Msg 6522, Level 16, State 1, Procedure sp_rxPredict, Line 321
+A .NET Framework error occurred during execution of user-defined routine or aggregate "sp_rxPredict": 
+Microsoft.RServer.ScoringLibrary.ScoringHost.InvalidModelStreamException: Real-time Scoring not supported for model. Model of size -226872601 bytes in model stream.
+Microsoft.RServer.ScoringLibrary.ScoringHost.InvalidModelStreamException: 
+   at Microsoft.RServer.ScoringLibrary.ScoringHost.StreamHeader..ctor(Stream stream)
+   at Microsoft.RServer.ScoringLibrary.ScoringHost.ScoreDispatcher.LoadModel(Stream modelStream)
+   at StoredProcedures.sp_rxPredict(SqlBytes model, SqlString inputDataQuery)
+.*/
