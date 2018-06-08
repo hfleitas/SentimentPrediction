@@ -229,7 +229,7 @@ EXECUTE [dbo].[predict_review_sentiment]
 --EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
 --fixed by seeing actual output using print(result) in messages tab.
 go
--- STEP 7 Use TSQL PREDICT with serialized model.
+-- STEP 7 Use TSQL PREDICT with a serialized model that uses realtimeScoring = True.
 create or alter proc uspPredictSentiment 
 @model varchar(30) = 'rx_logistic_regression'
 as
@@ -237,7 +237,7 @@ begin
 	declare @model_bin varbinary(max);
 	select @model_bin = model from dbo.models where model_name = @model and language = 'Python';
 	
-	select	p.*
+	select	p.pr_review_content, p.score
 	from	predict(model=@model_bin, data = product_reviews_test_data as d)
 	with	(pr_review_content nvarchar(max), score float) as p;
 end
