@@ -228,7 +228,7 @@ GO
 -- STEP 6 Execute the multi class prediction using the model we trained earlier
 -- The predicted score of Negative means the statement is (x percent Negative), and so on for the other sentiment categories. 
 -- Ie. since the’re all tag 3 positive, they will have very low negative scores, low neutral scores and very high positive scores. 
-EXECUTE [dbo].[predict_review_sentiment] 
+EXECUTE [dbo].[predict_review_sentiment] --13sec 8999 rows.
 --EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
 --fixed by seeing actual output using print(result) in messages tab.
 go
@@ -333,7 +333,7 @@ select	@model_bin = model from models where model_name = 'RevoMMLRealtimeScoring
 if @model_bin is not null begin
 --exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT * FROM product_reviews_training_data' end;
 exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT pr_review_content, cast(tag as varchar(1)) as tag FROM product_reviews_training_data' end;
-go
+go --26sec 80991 rows.
 --Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
 /*Msg 6522, Level 16, State 1, Procedure sp_rxPredict, Line 334
 A .NET Framework error occurred during execution of user-defined routine or aggregate "sp_rxPredict": 
