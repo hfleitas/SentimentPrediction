@@ -292,7 +292,7 @@ GO
 ALTER TABLE [dbo].[models] ADD DEFAULT 'Py' FOR [language]; 
 go
 -- STEP 9 Execute the stored procedure that creates and saves the machine learning model in a table
-exec  CreatePyModelRealtimeScoringOnly; --00:01:14.560 desktop wks. 
+exec  CreatePyModelRealtimeScoringOnly; --00:01:14.560 desktop, 00:02:40.351 laptop.
 --Take a look at the model object saved in the model table
 SELECT *, datalength(model) as Datalen FROM dbo.models; --(6MB w/rx_write_object vs 55MB w/pickle.dump)
 GO
@@ -332,7 +332,7 @@ declare @model_bin varbinary(max)=null
 select	@model_bin = model from models where model_name = 'RevoMMLRealtimeScoring';
 if @model_bin is not null begin
 exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT pr_review_content, cast(tag as varchar(1)) as tag FROM product_reviews_test_data' end;
-go --8,999 rows: sp_rxPredict 9sec vs  python microsoftml rx_predict 13sec.
+go --8,999 rows: sp_rxPredict 3-9sec vs python microsoftml rx_predict 11-25sec.
 /*
 Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
 
