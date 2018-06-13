@@ -331,12 +331,12 @@ go
 declare @model_bin varbinary(max)=null
 select	@model_bin = model from models where model_name = 'RevoMMLRealtimeScoring';
 if @model_bin is not null begin
---exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT * FROM product_reviews_training_data' end;
 exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT pr_review_content, cast(tag as varchar(1)) as tag FROM product_reviews_test_data' end;
-go --9sec 8,999 rows.
---8,999 rows: sp_rxPredict 9sec vs  python microsoftml rx_predict 13sec.
---Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
-/*Msg 6522, Level 16, State 1, Procedure sp_rxPredict, Line 334
+go --8,999 rows: sp_rxPredict 9sec vs  python microsoftml rx_predict 13sec.
+/*
+Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
+
+Msg 6522, Level 16, State 1, Procedure sp_rxPredict, Line 334
 A .NET Framework error occurred during execution of user-defined routine or aggregate "sp_rxPredict": 
 System.InvalidOperationException: Expect a column 'tag' of type: 'String'. Actual type is: 'System.Int32'
 System.InvalidOperationException: 
