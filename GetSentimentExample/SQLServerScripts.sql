@@ -15,10 +15,17 @@ EXEC sp_configure 'external scripts enabled', 1
 RECONFIGURE WITH OVERRIDE
 go
 declare @sql nvarchar(max)
-select @sql = N'create login ['+ @@servername +'\SQLRUserGroup] from windows; grant EXECUTE ANY EXTERNAL SCRIPT to ['+ @@servername +'\SQLRUserGroup];
---alter server role sysadmin add member ['+ @@servername +'\SQLRUserGroup];
+select @sql = N'if not exists (select 1 from syslogins where name ='''+ @@servername +'\SQLRUserGroup'')
+begin
+	create login ['+ @@servername +'\SQLRUserGroup] from windows
+end
+grant EXECUTE ANY EXTERNAL SCRIPT to ['+ @@servername +'\SQLRUserGroup];
+alter server role sysadmin add member ['+ @@servername +'\SQLRUserGroup];
 use tpcxbb_1gb;
-create user ['+ @@servername +'\SQLRUserGroup] from login ['+ @@servername +'\SQLRUserGroup];
+if not exists (select 1 from sysusers where name ='''+ @@servername +'\SQLRUserGroup'')
+begin
+	create user ['+ @@servername +'\SQLRUserGroup] from login ['+ @@servername +'\SQLRUserGroup];
+end
 alter role db_datawriter add member ['+ @@servername +'\SQLRUserGroup]'
 print @sql; exec sp_executesql @sql;
 go
