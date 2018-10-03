@@ -6,10 +6,10 @@
 restore filelistonly from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak'
 go
 restore database [tpcxbb_1gb] from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak' with replace,
-move 'tpcxbb_1gb' to 'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.mdf', 
-move 'tpcxbb_1gb_log' to 'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.ldf'
+move 'tpcxbb_1gb' to 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.mdf', 
+move 'tpcxbb_1gb_log' to 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.ldf'
 go
-alter database [tpcxbb_1gb] set COMPATIBILITY_LEVEL = 140
+alter database [tpcxbb_1gb] set COMPATIBILITY_LEVEL = 150 --2019
 GO
 EXEC sp_configure 'external scripts enabled', 1
 RECONFIGURE WITH OVERRIDE
