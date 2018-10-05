@@ -9,6 +9,8 @@ restore database [tpcxbb_1gb] from disk = 'c:\users\hfleitas\downloads\tpcxbb_1g
 move 'tpcxbb_1gb' to 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.mdf', 
 move 'tpcxbb_1gb_log' to 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.ldf'
 go
+waitfor delay '00:00:05'
+go
 alter database [tpcxbb_1gb] set COMPATIBILITY_LEVEL = 150 --2019
 GO
 EXEC sp_configure 'external scripts enabled', 1
@@ -286,7 +288,7 @@ modelpy = rx_logistic_regression(formula = "tag ~ features",
 ## Serialize and write the model
 modelbin = rx_serialize_model(modelpy, realtime_scoring_only = True)
 #modelbin = pickle.dumps(model)
-rx_write_object(dest, key_name="model_name", key="RevoMMLRealtimeScoring", value_name="model", value=modelbin, serialize=False, compress=None, overwrite=True)';
+rx_write_object(dest, key_name="model_name", key="RevoMMLRealtimeScoring", value_name="model", value=modelbin, serialize=False, compress=None, overwrite=False)'; --overwrite=false on 2019, true on 2017.
 
  EXECUTE sp_execute_external_script
       @language = N'Python'
