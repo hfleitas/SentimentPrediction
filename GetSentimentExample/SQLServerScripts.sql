@@ -170,7 +170,8 @@ training_data["tag"] = training_data["tag"].astype("category")
 model = rx_logistic_regression(formula = "tag ~ features", data = training_data, method = "multiClass", ml_transforms=[
                         featurize_text(language="English",
                                      cols=dict(features="pr_review_content"),
-                                      word_feature_extractor=n_gram(2, weighting="TfIdf"))])
+                                      word_feature_extractor=n_gram(2, weighting="TfIdf"))],
+						train_threads=1) ##Single Thread for 2019ctp2
 
 ## Serialize the model so that we can store it in a table
 modelbin = pickle.dumps(model)';
