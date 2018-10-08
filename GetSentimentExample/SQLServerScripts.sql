@@ -1,4 +1,6 @@
 -- blog: https://blogs.msdn.microsoft.com/sqlserverstorageengine/2017/11/01/sentiment-analysis-with-python-in-sql-server-machine-learning-services/
+-- Added train_threads=1 to [create_text_classification_model] for Memory Error in 2019ctp2. 
+-- To fix "path name too long" added os.putenv("TMP", os.path.join("temp")) After import platform line in C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\PYTHON_SERVICES\Lib\site-packages\revoscalepy\__init__.py, then restarted LaunchPad svc.
 --  + --------------------- +
 --  | 1. restore sample db. |
 --  + --------------------- +
