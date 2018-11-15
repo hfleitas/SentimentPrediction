@@ -102,7 +102,10 @@ exec [get_sentiment] N'Destiny is a gift. Some go their entire lives, living exi
 -- Language: English, Sentiment: 78%.
 -- Key phrases: face of fear, existence, triumph, valor, sense of purpose, entire lives, quiet desperation, shoulders, greater heights, precursor, Destiny, gift, Master Jim, burden, truth, hero. 
 go
-
+/* 2019ctp2.0
+Msg 39004, Level 16, State 20, Line 88
+A 'Python' script error occurred during execution of 'sp_execute_external_script' with HRESULT 0x80004004.
+*/
 --  + ------------------------------------ +
 --  | 4. create schema to train own model. |
 --  + ------------------------------------ +
@@ -159,7 +162,7 @@ BEGIN
  --The Python script we want to execute
  SET @train_script = N'
 ##Import necessary packages
-from microsoftml import rx_logistic_regression,featurize_text, n_gram
+from microsoftml import rx_logistic_regression, featurize_text, n_gram
 import pickle
 ## Defining the tag column as a categorical type
 training_data["tag"] = training_data["tag"].astype("category")
@@ -172,8 +175,7 @@ training_data["tag"] = training_data["tag"].astype("category")
 model = rx_logistic_regression(formula = "tag ~ features", data = training_data, method = "multiClass", ml_transforms=[
                         featurize_text(language="English",
                                      cols=dict(features="pr_review_content"),
-                                      word_feature_extractor=n_gram(2, weighting="TfIdf"))],
-						train_threads=1) ##Single Thread for 2019ctp2
+                                      word_feature_extractor=n_gram(2, weighting="TfIdf"))]) 
 
 ## Serialize the model so that we can store it in a table
 modelbin = pickle.dumps(model)';
@@ -268,7 +270,7 @@ BEGIN
  DECLARE @model varbinary(max), @train_script nvarchar(max);
  --The Python script we want to execute
  SET @train_script = N'
-from microsoftml import rx_logistic_regression,featurize_text, n_gram
+from microsoftml import rx_logistic_regression, featurize_text, n_gram
 from revoscalepy import rx_serialize_model, RxOdbcData, rx_write_object, RxInSqlServer, rx_set_compute_context, RxLocalSeq
 #import pickle
 
