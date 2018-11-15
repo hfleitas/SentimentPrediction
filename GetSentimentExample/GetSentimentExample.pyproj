@@ -11,7 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>GetSentimentExample</Name>
     <RootNamespace>GetSentimentExample</RootNamespace>
-    <InterpreterId>Global|VisualStudio|SQLServer2017PythonSvcs</InterpreterId>
+    <InterpreterId>Global|VisualStudio|SQLServer2019ctp2</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Yelp.py" />
     <Compile Include="GetSentimentExample.py" />
     <Compile Include="GetSentimentExample2.py" />
   </ItemGroup>
@@ -30,11 +31,13 @@
     <InterpreterReference Include="Global|VisualStudio|MLServer930Python" />
     <InterpreterReference Include="Global|VisualStudio|PyForMLS" />
     <InterpreterReference Include="Global|VisualStudio|SQLServer2017PythonSvcs" />
+    <InterpreterReference Include="Global|VisualStudio|SQLServer2019ctp2" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Misc\AddToSQL-PreTrainedModels.cmd" />
     <Content Include="Misc\EnableRealtimePredictions.cmd" />
     <Content Include="Misc\FixPath.cmd" />
+    <Content Include="Misc\Install-MLModels2019ctp2.ps1" />
     <Content Include="Misc\Performance_20180606.vsp" />
     <Content Include="Misc\Install-MLModels.ps1" />
     <Content Include="Misc\Install-PyForMLS.ps1" />

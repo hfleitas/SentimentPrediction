@@ -5,11 +5,11 @@
 --The database used for this sample can be downloaded here: https://sqlchoice.blob.core.windows.net/sqlchoice/static/tpcxbb_1gb.bak
 restore filelistonly from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak'
 go
-restore database [tpcxbb_1gb] from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak' with replace,
-move 'tpcxbb_1gb' to 'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.mdf', 
-move 'tpcxbb_1gb_log' to 'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.ldf'
+restore database [tpcxbb_1gb2] from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak' with replace,
+move 'tpcxbb_1gb' to 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.mdf', 
+move 'tpcxbb_1gb_log' to 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\tpcxbb_1gb.ldf'
 go
-alter database [tpcxbb_1gb] set COMPATIBILITY_LEVEL = 140
+alter database [tpcxbb_1gb] set COMPATIBILITY_LEVEL = 150
 GO
 EXEC sp_configure 'external scripts enabled', 1
 RECONFIGURE WITH OVERRIDE
@@ -98,7 +98,10 @@ exec [get_sentiment] N'Destiny is a gift. Some go their entire lives, living exi
 -- Language: English, Sentiment: 78%.
 -- Key phrases: face of fear, existence, triumph, valor, sense of purpose, entire lives, quiet desperation, shoulders, greater heights, precursor, Destiny, gift, Master Jim, burden, truth, hero. 
 go
-
+/*
+Msg 39004, Level 16, State 20, Line 88
+A 'Python' script error occurred during execution of 'sp_execute_external_script' with HRESULT 0x80004004.
+*/
 --  + ------------------------------------ +
 --  | 4. create schema to train own model. |
 --  + ------------------------------------ +
@@ -295,6 +298,7 @@ rx_write_object(dest, key_name="model_name", key="RevoMMLRealtimeScoring", value
        , @input_data_1_name = N'training_data'
 END;
 GO
+
 -- due to not null and pk from previous def.
 ALTER TABLE [dbo].[models] ADD DEFAULT 'Py' FOR [language]; 
 go
@@ -336,7 +340,7 @@ exec sp_changedbowner @loginame = sa, @map = false;
 go
 -- Run cmd as admin: EnableRealtimePredictions.cmd
 declare @model_bin varbinary(max)=null
-select	@model_bin = model from models where model_name = 'RevoMMLRealtimeScoring';
+select	@model_bin = select model from models where model_name = 'RevoMMLRealtimeScoring';
 if @model_bin is not null begin
 exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT pr_review_content, cast(tag as varchar(1)) as tag FROM product_reviews_test_data' end;
 go --8,999 rows: sp_rxPredict 3-9sec vs python microsoftml rx_predict 11-25sec.
