@@ -43,6 +43,7 @@
     <Content Include="Misc\Install-PyForMLS.ps1" />
     <Content Include="Misc\microsoft-machine-learning-algorithm-cheat-sheet-v6.pdf" />
     <Content Include="Misc\Performance_20180605.vsp" />
+    <Content Include="requirements.txt" />
     <Content Include="SQLMLVersions-Troubleshooting.sql" />
     <Content Include="SQLServerScripts.sql" />
   </ItemGroup>
