@@ -260,11 +260,13 @@ exec uspPredictSentiment
 Error occurred during execution of the builtin function 'PREDICT' with HRESULT 0x80070057. Model is corrupt or invalid.*/
 go
 -- STEP 8 Same proc to train but serialize model for realtimeScoringOnly.
-CREATE OR ALTER PROCEDURE [dbo].CreatePyModelRealtimeScoringOnly AS
-BEGIN
- DECLARE @model varbinary(max), @train_script nvarchar(max);
- --The Python script we want to execute
- SET @train_script = N'
+create or alter proc CreatePyModelRealtimeScoringOnly as
+	
+	declare @model varbinary(max), @train_script nvarchar(max);
+	delete top(1) from models where model_name = 'RevoMMLRealtimeScoring' and language = 'Py';
+	
+	--The Python script we want to execute
+	set @train_script = N'
 from microsoftml import rx_logistic_regression, featurize_text, n_gram
 from revoscalepy import rx_serialize_model, RxOdbcData, rx_write_object, RxInSqlServer, rx_set_compute_context, RxLocalSeq
 #import pickle
@@ -290,20 +292,18 @@ modelbin = rx_serialize_model(modelpy, realtime_scoring_only = True)
 #modelbin = pickle.dumps(model)
 rx_write_object(dest, key_name="model_name", key="RevoMMLRealtimeScoring", value_name="model", value=modelbin, serialize=False, compress=None, overwrite=False)'; --overwrite=false on 2019, true on 2017.
 
- EXECUTE sp_execute_external_script
-      @language = N'Python'
-       , @script = @train_script
-       , @input_data_1 = N'SELECT * FROM product_reviews_training_data'
-       , @input_data_1_name = N'training_data'
-END;
-GO
+	exec sp_execute_external_script @language = N'Python'
+		,@script = @train_script
+		,@input_data_1 = N'select * from product_reviews_training_data'
+		,@input_data_1_name = N'training_data'
+go
 -- due to not null and pk from previous def.
-ALTER TABLE [dbo].[models] ADD DEFAULT 'Py' FOR [language]; 
+alter table models add default 'Py' for language; 
 go
 -- STEP 9 Execute the stored procedure that creates and saves the machine learning model in a table
 exec  CreatePyModelRealtimeScoringOnly; --00:01:14.560 desktop, 00:02:40.351 laptop.
 --Take a look at the model object saved in the model table
-SELECT *, datalength(model) as Datalen FROM dbo.models; --(6MB w/rx_write_object vs 55MB w/pickle.dump)
+select *, datalength(model) as Datalen from dbo.models; --(6MB w/rx_write_object vs 55MB w/pickle.dump)
 GO
 -- incase of OutOfMemoryException: https://docs.microsoft.com/sql/advanced-analytics/r/how-to-create-a-resource-pool-for-r?view=sql-server-2017
 -- 1. Limit SQL Server memory usage to 60% of the value in the 'max server memory' setting.
@@ -340,7 +340,7 @@ go
 declare @model_bin varbinary(max)=null
 select	@model_bin = model from models where model_name = 'RevoMMLRealtimeScoring';
 if @model_bin is not null begin
-exec sp_rxPredict @model = @model_bin, @inputData = N'SELECT pr_review_content, cast(tag as varchar(1)) as tag FROM product_reviews_test_data' end;
+exec sp_rxPredict @model = @model_bin, @inputData = N'select pr_review_content, cast(tag as varchar(1)) as tag from product_reviews_test_data' end;
 go --8,999 rows: sp_rxPredict 3-9sec vs python microsoftml rx_predict 11-25sec.
 /*
 Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
