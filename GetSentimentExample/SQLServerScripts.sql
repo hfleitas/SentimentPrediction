@@ -193,17 +193,17 @@ go
 exec create_text_classification_model;
 --Take a look at the model object saved in the model table
 select * from dbo.models;
-GO
+go
 
 -- STEP 5 --Proc that uses the model we just created to predict/classify the sentiment of product reviews
-CREATE OR ALTER PROCEDURE [dbo].[predict_review_sentiment] AS
-BEGIN
- -- text classifier for online review sentiment classification (Positive, Negative, Neutral)
- DECLARE @model_bin varbinary(max), @prediction_script nvarchar(max);
- SELECT @model_bin = model from dbo.models WHERE model_name = 'rx_logistic_regression' and language = 'Python';
+create or alter proc predict_review_sentiment 
+as
+	-- text classifier for online review sentiment classification (Positive, Negative, Neutral)
+	declare @model_bin varbinary(max), @prediction_script nvarchar(max);
+	select @model_bin = model from dbo.models where model_name = 'rx_logistic_regression' and language = 'Python';
  
- --The Python script we want to execute
- SET @prediction_script = N'
+	-- The Python script we want to execute
+	set @prediction_script = N'
 from microsoftml import rx_predict
 from revoscalepy import rx_data_step 
 import pickle
@@ -222,24 +222,22 @@ result = rx_data_step(predictions)
 
 ## print(result)';
  
- EXECUTE sp_execute_external_script
-    @language = N'Python'
-    , @script = @prediction_script
-    , @input_data_1 = N'SELECT * FROM product_reviews_test_data'
-    , @input_data_1_name = N'test_data'
-    , @output_data_1_name = N'result'
-    , @params  = N'@model_bin varbinary(max)'
-    , @model_bin = @model_bin
-  WITH RESULT SETS (("Review" NVARCHAR(MAX), "PredictedLabel" FLOAT, "Predicted_Score_Negative" FLOAT, "Predicted_Score_Neutral" FLOAT, "Predicted_Score_Positive" FLOAT)); 
-END 
-GO
+	exec sp_execute_external_script @language = N'Python'
+		,@script = @prediction_script
+		,@input_data_1 = N'select * from product_reviews_test_data'
+		,@input_data_1_name = N'test_data'
+		,@output_data_1_name = N'result'
+		,@params  = N'@model_bin varbinary(max)'
+		,@model_bin = @model_bin
+	with result sets(("Review" nvarchar(max), "PredictedLabel" float, "Predicted_Score_Negative" float, "Predicted_Score_Neutral" float, "Predicted_Score_Positive" float)); 
+go
 --added PredictedLablel (seen msgs tab with print(result)).
 --use print(result) to see dataframe columns to match result set columns.
 
 -- STEP 6 Execute the multi class prediction using the model we trained earlier
 -- The predicted score of Negative means the statement is (x percent Negative), and so on for the other sentiment categories. 
 -- Ie. since the’re all tag 3 positive, they will have very low negative scores, low neutral scores and very high positive scores. 
-EXECUTE [dbo].[predict_review_sentiment] --13sec 8999 rows.
+exec predict_review_sentiment --13sec 8999 rows.
 --EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
 --fixed by seeing actual output using print(result) in messages tab.
 go
