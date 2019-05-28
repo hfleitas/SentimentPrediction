@@ -51,7 +51,7 @@ go
 -- Create stored procedure that uses a pre-trained model to determine sentiment of a given text
 use [tpcxbb_1gb]
 go
-create or alter proc dbo.GetSentiment (@text nvarchar(max))
+create or alter proc GetSentiment (@text nvarchar(max))
 as 
 declare @script nvarchar(max);
 
@@ -236,7 +236,7 @@ go
 
 -- STEP 6 Execute the multi class prediction using the model we trained earlier
 -- The predicted score of Negative means the statement is (x percent Negative), and so on for the other sentiment categories. 
--- Ie. since the’re all tag 3 positive, they will have very low negative scores, low neutral scores and very high positive scores. 
+-- Ie. since theï¿½re all tag 3 positive, they will have very low negative scores, low neutral scores and very high positive scores. 
 exec predict_review_sentiment --13sec 8999 rows.
 --EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
 --fixed by seeing actual output using print(result) in messages tab.
