@@ -29,8 +29,6 @@
     <Compile Include="Example2.py" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="Global|VisualStudio|PyForMLS" />
-    <InterpreterReference Include="Global|VisualStudio|SQLServer2017PythonSvcs" />
     <InterpreterReference Include="Global|VisualStudio|SQLServer2019" />
   </ItemGroup>
   <ItemGroup>
