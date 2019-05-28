@@ -13,12 +13,13 @@ move 'tpcxbb_1gb_log' to 'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSER
 go
 waitfor delay '00:00:05'
 go
-alter database [tpcxbb_1gb] set COMPATIBILITY_LEVEL = 150 --2019
+alter database [tpcxbb_1gb] set compatibility_level = 150 --2019
 GO
-EXEC sp_configure 'external scripts enabled', 1
-RECONFIGURE WITH OVERRIDE
+exec sp_configure 'external scripts enabled', 1
+reconfigure with override
 go
-declare @sql nvarchar(max)
+
+declare @sql nvarchar(max);
 select @sql = N'if not exists (select 1 from syslogins where name ='''+ @@servername +'\SQLRUserGroup'')
 begin
 	create login ['+ @@servername +'\SQLRUserGroup] from windows
@@ -50,14 +51,12 @@ go
 -- Create stored procedure that uses a pre-trained model to determine sentiment of a given text
 use [tpcxbb_1gb]
 go
-CREATE OR ALTER PROCEDURE [dbo].[get_sentiment](@text NVARCHAR(MAX))
-AS
-BEGIN
-
-DECLARE  @script nvarchar(max);
+create or alter proc dbo.GetSentiment (@text nvarchar(max))
+as 
+declare @script nvarchar(max);
 
 --The Python script we want to execute
-SET @script = N'
+set @script = N'
 import pandas as p
 from microsoftml import rx_featurize, get_sentiment
 
@@ -73,30 +72,29 @@ sentiment_scores = rx_featurize(data=text_to_analyze,ml_transforms=[get_sentimen
 sentiment_scores["Sentiment"] = sentiment_scores.scores.apply(lambda score: "Positive" if score > 0.6 else "Negative")
 ';
  
-EXECUTE sp_execute_external_script @language = N'Python'
-	, @script = @script
-	, @output_data_1_name = N'sentiment_scores'
-	, @params = N'@text nvarchar(max)'
-	, @text = @text
-WITH RESULT SETS (("Text" NVARCHAR(MAX),"Score" FLOAT, "Sentiment" NVARCHAR(30)));   
-END    
-GO
+exec sp_execute_external_script @language = N'Python'
+	,@script = @script
+	,@output_data_1_name = N'sentiment_scores'
+	,@params = N'@text nvarchar(max)'
+	,@text = @text
+with result sets (("Text" nvarchar(max), "Score" float, "Sentiment" nvarchar(30)));   
+go
 
 --  + -----------------+
 --  | 3. Test the proc |
 --  + -----------------+
 -- The below examples test a negative and a positive review text
-exec [get_sentiment] N'These are not a normal stress reliever. First of all, they got sticky, hairy and dirty on the first day I received them. Second, they arrived with tiny wrinkles in their bodies and they were cold. Third, their paint started coming off. Fourth when they finally warmed up they started to stick together. Last, I thought they would be foam but, they are a sticky rubber. If these were not rubber, this review would not be so bad.';
+exec GetSentiment N'These are not a normal stress reliever. First of all, they got sticky, hairy and dirty on the first day I received them. Second, they arrived with tiny wrinkles in their bodies and they were cold. Third, their paint started coming off. Fourth when they finally warmed up they started to stick together. Last, I thought they would be foam but, they are a sticky rubber. If these were not rubber, this review would not be so bad.';
 go --0.424483060836792	Negative
-exec [get_sentiment] N'These are the cutest things ever!! Super fun to play with and the best part is that it lasts for a really long time. So far these have been thrown all over the place with so many of my friends asking to borrow them because they are so fun to play with. Super soft and squishy just the perfect toy for all ages.'
+exec GetSentiment N'These are the cutest things ever!! Super fun to play with and the best part is that it lasts for a really long time. So far these have been thrown all over the place with so many of my friends asking to borrow them because they are so fun to play with. Super soft and squishy just the perfect toy for all ages.'
 go --0.869342148303986	Positive
-exec [get_sentiment] N'I really did not like the taste of it' 
+exec GetSentiment N'I really did not like the taste of it' 
 go --0.46178987622261	Negative
-exec [get_sentiment] N'It was surprisingly quite good!'
+exec GetSentiment N'It was surprisingly quite good!'
 go --0.960192441940308	Positive
-exec [get_sentiment] N'I will never ever ever go to that place again!!' 
+exec GetSentiment N'I will never ever ever go to that place again!!' 
 go --0.310343533754349	Negative
-exec [get_sentiment] N'Destiny is a gift. Some go their entire lives, living existence as a quiet desperation. Never learning the truth that what feels as though a burden pushing down upon our shoulders, is actually, a sense of purpose that lifts us to greater heights. Never forget that fear is but the precursor to valor, that to strive and triumph in the face of fear, is what it means to be a hero. Don''t think, Master Jim. Become!'
+exec GetSentiment N'Destiny is a gift. Some go their entire lives, living existence as a quiet desperation. Never learning the truth that what feels as though a burden pushing down upon our shoulders, is actually, a sense of purpose that lifts us to greater heights. Never forget that fear is but the precursor to valor, that to strive and triumph in the face of fear, is what it means to be a hero. Don''t think, Master Jim. Become!'
 --0.5	Negative. Why...Not enough?
 -- https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/ 
 -- Language: English, Sentiment: 78%.
@@ -109,58 +107,58 @@ A 'Python' script error occurred during execution of 'sp_execute_external_script
 --  + ------------------------------------ +
 --  | 4. create schema to train own model. |
 --  + ------------------------------------ +
-USE [tpcxbb_1gb]
-GO
+use [tpcxbb_1gb]
+go
 --**************************************************************
 -- STEP 1 Create a table for storing the machine learning model
 --**************************************************************
-DROP TABLE IF EXISTS [dbo].[models]
-GO
-CREATE TABLE [dbo].[models](
- [language] [varchar](30) NOT NULL,
- [model_name] [varchar](30) NOT NULL,
- [model] [varbinary](max) NOT NULL,
- [create_time] [datetime2](7) NULL DEFAULT (sysdatetime()),
- [created_by] [nvarchar](500) NULL DEFAULT (suser_sname()),
- PRIMARY KEY CLUSTERED  ( [language], [model_name] )
+drop table if exists models
+go
+create table models (
+	 language		varchar(30) not null
+	,model_name		varchar(30) not null
+	,model			varbinary(max) 
+	,create_time	datetime default(getdate())
+	,created_by		nvarchar(500) default(suser_sname())
+ primary key clustered (language, model_name)
 )
-GO
+go
 
 -- STEP 2 Look at the dataset we will use in this sample
 -- Tag is a label indicating the sentiment of a review. These are actual values we will use to train the model
 -- For training purposes, we will use 90% percent of the data.
 -- For testing / scoring purposes, we will use 10% percent of the data.
 
-CREATE OR ALTER VIEW product_reviews_training_data
-AS
-SELECT TOP(CAST( ( SELECT COUNT(*) FROM   product_reviews)*.9 AS INT))
-  CAST(pr_review_content AS NVARCHAR(4000)) AS pr_review_content,
-  CASE 
-   WHEN pr_review_rating <3 THEN 1 
-   WHEN pr_review_rating =3 THEN 2 
-   ELSE 3 END AS tag 
-FROM   product_reviews;
-GO
+create or alter view product_reviews_training_data
+as
+	select	top(select cast(count(*)*.9 as int) from product_reviews)
+			cast(pr_review_content as nvarchar(4000)) as pr_review_content
+			,case
+				when pr_review_rating < 3 then 1 
+				when pr_review_rating = 3 then 2 else 3 
+			end as tag 
+	from	product_reviews;
+go
 
-CREATE OR ALTER VIEW product_reviews_test_data
-AS
-SELECT TOP(CAST( ( SELECT COUNT(*) FROM   product_reviews)*.1 AS INT))
-  CAST(pr_review_content AS NVARCHAR(4000)) AS pr_review_content,
-  CASE 
-   WHEN pr_review_rating <3 THEN 1 
-   WHEN pr_review_rating =3 THEN 2 
-   ELSE 3 END AS tag 
-FROM   product_reviews;
-GO
+create or alter view product_reviews_test_data
+as 
+	select	top(select cast(count(*)*.1 as int) from product_reviews)
+			cast(pr_review_content as nvarchar(4000)) as pr_review_content
+			,case
+				when pr_review_rating < 3 then 1 
+				when pr_review_rating = 3 then 2 else 3 
+			end as tag 
+	from	product_reviews;
+go
 
 -- STEP 3 Create a stored procedure for training a text classifier model for product review sentiment classification (Positive, Negative, Neutral)
 -- 1 = Negative, 2 = Neutral, 3 = Positive
-CREATE OR ALTER PROCEDURE [dbo].[create_text_classification_model]
-AS
-BEGIN
- DECLARE @model varbinary(max), @train_script nvarchar(max);
- --The Python script we want to execute
- SET @train_script = N'
+create or alter proc create_text_classification_model
+as
+	declare @model varbinary(max), @train_script nvarchar(max);
+	
+	--The Python script we want to execute
+	set @train_script = N'
 ##Import necessary packages
 from microsoftml import rx_logistic_regression, featurize_text, n_gram
 import pickle
@@ -180,22 +178,21 @@ model = rx_logistic_regression(formula = "tag ~ features", data = training_data,
 ## Serialize the model so that we can store it in a table
 modelbin = pickle.dumps(model)';
 
- EXECUTE sp_execute_external_script
-      @language = N'Python'
-       , @script = @train_script
-       , @input_data_1 = N'SELECT * FROM product_reviews_training_data'
-       , @input_data_1_name = N'training_data'
-       , @params  = N'@modelbin varbinary(max) OUTPUT' 
-       , @modelbin = @model OUTPUT;
- --Save model to DB Table      
- DELETE FROM dbo.models WHERE model_name = 'rx_logistic_regression' and language = 'Python';
- INSERT INTO dbo.models (language, model_name, model) VALUES('Python', 'rx_logistic_regression', @model);
-END;
-GO
+	execute sp_execute_external_script @language = N'Python'
+		,@script = @train_script
+		,@input_data_1 = N'select * from product_reviews_training_data'
+		,@input_data_1_name = N'training_data'
+		,@params  = N'@modelbin varbinary(max) OUTPUT' 
+		,@modelbin = @model output;
+ 
+	--Save model to DB Table
+	delete from models where model_name = 'rx_logistic_regression' and language = 'Python';
+	insert into models (language, model_name, model) values('Python', 'rx_logistic_regression', @model);
+go
 -- STEP 4 Execute the stored procedure that creates and saves the machine learning model in a table
-EXECUTE [dbo].[create_text_classification_model];
+exec create_text_classification_model;
 --Take a look at the model object saved in the model table
-SELECT * FROM dbo.models;
+select * from dbo.models;
 GO
 
 -- STEP 5 --Proc that uses the model we just created to predict/classify the sentiment of product reviews

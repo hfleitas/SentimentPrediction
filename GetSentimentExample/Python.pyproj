@@ -12,7 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>Python</Name>
     <RootNamespace>GetSentimentExample</RootNamespace>
-    <InterpreterId>Global|VisualStudio|SQLServer2019ctp2</InterpreterId>
+    <InterpreterId>Global|VisualStudio|SQLServer2019</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -29,10 +29,9 @@
     <Compile Include="Example2.py" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="Global|VisualStudio|MLServer930Python" />
     <InterpreterReference Include="Global|VisualStudio|PyForMLS" />
     <InterpreterReference Include="Global|VisualStudio|SQLServer2017PythonSvcs" />
-    <InterpreterReference Include="Global|VisualStudio|SQLServer2019ctp2" />
+    <InterpreterReference Include="Global|VisualStudio|SQLServer2019" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Install-MLModels2019ctp3.ps1" />
