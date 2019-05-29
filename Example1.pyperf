@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectTarget>
+    <TargetProject>08bbb5d5-184a-46df-9e6c-66311dca10aa</TargetProject>
+    <FriendlyName>GetSentimentExample</FriendlyName>
+  </ProjectTarget>
+  <Reports>
+    <Report>
+      <Filename>C:\Users\hfleitas\AppData\Local\Temp\GetSentimentExample_20180606.vsp</Filename>
+    </Report>
+  </Reports>
+</ProfilingTarget>

@@ -1,0 +1,61 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>08bbb5d5-184a-46df-9e6c-66311dca10aa</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>Example1.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>Python</Name>
+    <RootNamespace>Python</RootNamespace>
+    <InterpreterId>Global|VisualStudio|SQLServer2019</InterpreterId>
+    <IsWindowsApplication>False</IsWindowsApplication>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Yelp.py" />
+    <Compile Include="Example1.py" />
+    <Compile Include="Example2.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|VisualStudio|SQLServer2019" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Install-MLModels2019ctp3.ps1" />
+    <Content Include="Misc\AddToSQL-PreTrainedModels.cmd" />
+    <Content Include="Misc\EnableRealtimePredictions.cmd" />
+    <Content Include="Misc\FixPath.cmd" />
+    <Content Include="Misc\Install-MLModels2019ctp2.ps1" />
+    <Content Include="Misc\Performance_20180606.vsp" />
+    <Content Include="Misc\Install-MLModels.ps1" />
+    <Content Include="Misc\Install-PyForMLS.ps1" />
+    <Content Include="Misc\microsoft-machine-learning-algorithm-cheat-sheet-v6.pdf" />
+    <Content Include="Misc\Performance_20180605.vsp" />
+    <Content Include="requirements.txt" />
+    <Content Include="SQLMLVersions-Troubleshooting.sql" />
+    <Content Include="SQLServerScripts.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Misc\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
