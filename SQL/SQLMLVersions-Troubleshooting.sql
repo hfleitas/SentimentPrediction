@@ -18,7 +18,7 @@ OutputDataSet = pandas.DataFrame( {"property_name": ["Python.home", "Python.vers
 WITH RESULT SETS ((PropertyName nvarchar(100), PropertyValue nvarchar(4000)));
 go
 -- See msgs tab Python revoscalepy and mml versions.
-EXEC sp_execute_external_script  @language =N'Python',
+EXEC sp_execute_external_script @language =N'Python',
 @script=N'
 import sys, revoscalepy, microsoftml
 print(sys.version)
