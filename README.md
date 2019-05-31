@@ -1,6 +1,7 @@
 ![cover](https://github.com/hfleitas/SentimentPrediction/blob/master/Cover.png "cover")
 
-# GetSentimentExample
+# Sentiment Prediction
+### Real-time in SQL Server
 Python and T-SQL solution for Sentiment analysis and Real-time predictions in SQL Server 2017+
 
 ## Getting Started
