@@ -1,3 +1,5 @@
+![cover](https://github.com/hfleitas/SentimentPrediction/blob/master/Cover.png "cover")
+
 # GetSentimentExample
 Python and T-SQL solution for Sentiment analysis and Real-time predictions in SQL Server 2017+
 
@@ -23,7 +25,7 @@ Select to Add Feature Machine Learning Services (In-Database), R and Python.
 
 Download latest release [tpcxbb_1gb.bak [234 MB]](https://sqlchoice.blob.core.windows.net/sqlchoice/static/tpcxbb_1gb.bak) and restore it. (If you already have you may skip this step)
 
-To restore see file: [SQLServerScripts.sql](https://github.com/hfleitas/GetSentimentExample/blob/master/GetSentimentExample/SQLServerScripts.sql)
+To restore see file: [SQLServerScripts.sql](https://github.com/hfleitas/SentimentPrediction/blob/master/SQL/SQLServerScripts.sql)
 
 ```
 --verify
@@ -43,16 +45,16 @@ go
 EXEC sp_updatestats
 ```
 
-1. Enable external scripts by running [SQLServerScripts.sql](https://github.com/hfleitas/GetSentimentExample/blob/master/GetSentimentExample/SQLServerScripts.sql) on your SQL Server instance. Be aware Reconfigure with Override will immediatly apply any modified config values to the running config.
+1. Enable external scripts by running [SQLServerScripts.sql](https://github.com/hfleitas/SentimentPrediction/blob/master/SQL/SQLServerScripts.sql) on your SQL Server instance. Be aware Reconfigure with Override will immediatly apply any modified config values to the running config.
 ```
 EXEC sp_configure 'external scripts enabled', 1
 RECONFIGURE WITH OVERRIDE
 go
 ```
 
-2. Walk through the steps in [SQLServerScripts.sql](https://github.com/hfleitas/GetSentimentExample/blob/master/GetSentimentExample/SQLServerScripts.sql) to see how Sentiment Analysis works inside the datase.
+2. Walk through the steps in [SQLServerScripts.sql](https://github.com/hfleitas/SentimentPrediction/blob/master/SQL/SQLServerScripts.sql) to see how Sentiment Analysis works inside the datase.
 
-3. You may Start without Debugging [GetSentimentExample.py](https://github.com/hfleitas/GetSentimentExample/blob/master/GetSentimentExample/GetSentimentExample.py), in Visual Studio 2017 Community Edition, get the Tools/Features for Python, then  set the Python Envirments to SQLServer2019ctp2 or SQLServer2017PythonSvcs, whichever version of SQL Server you have installed. The prefix path for the Python Enviroment will be like so [C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\PYTHON_SERVICES], click Auto Detect, Apply and set this as the default enviroment. 
+3. You may Start without Debugging [GetSentimentExample.py](https://github.com/hfleitas/SentimentPrediction/blob/master/Python/Example1.py), in Visual Studio 2017 Community Edition, get the Tools/Features for Python, then  set the Python Envirments to SQLServer2019ctp2 or SQLServer2017PythonSvcs, whichever version of SQL Server you have installed. The prefix path for the Python Enviroment will be like so [C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\PYTHON_SERVICES], click Auto Detect, Apply and set this as the default enviroment. 
 
 End with sp_rxPredict:
 
@@ -67,35 +69,37 @@ This example will illustrate how to:
 * Grant Access
 * Config
 * Install Pre-Trained & Open Source ML Models (Deep Neural Networks)
-* Code in Python and T-SQL
+* Code in Python and T-SQL (sp_execute_external_script)
 * Python Profiling
 * Real-time scoring
+* Azure Data Studio Notebooks
+* Cognitive API (Text Analytics)
 
 The intention is to process large amounts of inputs and predict quality scores fast enough for real-time operations. It's advisable to monitor the system task manager cpu/ram during the train model step(s). 
 
 ## Deployment
 
-You may download this repo and open the solution file [GetSentimentExample.sln] in Visual Studio.
+You may clone this repo and open it in [Azure Data Studio](https://docs.microsoft.com/sql/azure-data-studio/download) or open the solution file [SentimentML.sln] in Visual Studio.
 
-Follow instructions in [SQLServerScripts.sql](https://github.com/hfleitas/GetSentimentExample/blob/master/GetSentimentExample/SQLServerScripts.sql).
+Follow instructions in [SQLServerScripts.sql](https://github.com/hfleitas/SentimentPrediction/blob/master/SQL/SQLServerScripts.sql).
 
 ## Built With
 
-* [SQL Server 2017](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) - The #1 database engine in the world.
+* [SQL Server 2017 and up](https://aka.ms/sqlserver) - The #1 database engine in the world.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/hfleitas/GetSentimentExample) for code of conduct, and the process for submitting pull requests.
+Please read [CONTRIBUTING.md](https://github.com/hfleitas/SentimentPrediction) for code of conduct, and the process for submitting pull requests.
 
 ## Versioning
 
-I use [Github](http://github.com/) for versioning. For the versions available, see the [tags on this repository](https://github.com/hfleitas/GetSentimentExample/tags). 
+I use [Github](http://github.com/) for versioning. For the versions available, see the [tags on this repository](https://github.com/hfleitas/SentimentPrediction/tags). 
 
 ## Authors
 
-* **Hiram Fleitas** - *This Repo - GetSentimentExample* - [Hiram Fleitas](https://github.com/hfleitas)
+* **Hiram Fleitas** - *This Repo - SentimentPrediction* - [Hiram Fleitas](https://github.com/hfleitas)
 
-See also the list of [contributors](https://github.com/hfleitas/GetSentimentExample/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/hfleitas/SentimentPrediction/contributors) who participated in this project.
 
 ## License
 
@@ -103,5 +107,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* [Nellie Gustafsson](https://github.com/NelGson) - Program Manager (Microsoft)
+* [Nellie Gustafsson](https://github.com/NelGson) - Senior Program Manager (Microsoft)
+* [Sumit Kumar](https://github.com/sumitkmsft) - Principal Product Manager (Microsoft)
+* [Ryan Donaghy](https://github.com/gh-canon) - Senior Software Developer (Universal Property)
 * MS Research and the entire SQL Server ML team.
