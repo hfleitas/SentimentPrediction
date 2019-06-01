@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EE578853-DCF3-4316-B1E5-0FA022708165}"
 	ProjectSection(SolutionItems) = preProject
 		Performance1.psess = Performance1.psess
-		TrainModelRealtimeScoring.sql = TrainModelRealtimeScoring.sql
 	EndProjectSection
 EndProject
 Global

@@ -32,22 +32,23 @@
     <InterpreterReference Include="Global|VisualStudio|SQLServer2019" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Install-MLModels2019ctp3.ps1" />
-    <Content Include="Misc\AddToSQL-PreTrainedModels.cmd" />
-    <Content Include="Misc\EnableRealtimePredictions.cmd" />
-    <Content Include="Misc\FixPath.cmd" />
-    <Content Include="Misc\Install-MLModels2019ctp2.ps1" />
-    <Content Include="Misc\Performance_20180606.vsp" />
-    <Content Include="Misc\Install-MLModels.ps1" />
-    <Content Include="Misc\Install-PyForMLS.ps1" />
-    <Content Include="Misc\microsoft-machine-learning-algorithm-cheat-sheet-v6.pdf" />
-    <Content Include="Misc\Performance_20180605.vsp" />
+    <Content Include="PS-CMD\Install-MLModels2019ctp3.ps1" />
+    <Content Include="PS-CMD\AddToSQL-PreTrainedModels.cmd" />
+    <Content Include="PS-CMD\EnableRealtimePredictions.cmd" />
+    <Content Include="PS-CMD\FixPath.cmd" />
+    <Content Include="PS-CMD\Install-MLModels2019ctp2.ps1" />
+    <Content Include="PS-CMD\Performance_20180606.vsp" />
+    <Content Include="PS-CMD\Install-MLModels.ps1" />
+    <Content Include="PS-CMD\Install-PyForMLS.ps1" />
+    <Content Include="PS-CMD\microsoft-machine-learning-algorithm-cheat-sheet-v6.pdf" />
+    <Content Include="PS-CMD\Performance_20180605.vsp" />
     <Content Include="requirements.txt" />
-    <Content Include="SQLMLVersions-Troubleshooting.sql" />
-    <Content Include="SQLServerScripts.sql" />
+    <Content Include="SQL\SQLMLVersions-Troubleshooting.sql" />
+    <Content Include="SQL\SQLServerScripts.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Misc\" />
+    <Folder Include="PS-CMD\" />
+    <Folder Include="SQL\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
