@@ -42,6 +42,7 @@
     <Content Include="PS-CMD\Install-PyForMLS.ps1" />
     <Content Include="PS-CMD\microsoft-machine-learning-algorithm-cheat-sheet-v6.pdf" />
     <Content Include="PS-CMD\Performance_20180605.vsp" />
+    <Content Include="PS-CMD\UpgradingRequirements.txt" />
     <Content Include="requirements.txt" />
     <Content Include="SQL\SQLMLVersions-Troubleshooting.sql" />
     <Content Include="SQL\SQLServerScripts.sql" />
