@@ -1,6 +1,6 @@
 ![cover](https://github.com/hfleitas/SentimentPrediction/blob/master/Cover.png "cover")
 
-## 🍖 Resources
+## Resources 🍖
 1. [fleitasarts.com](http://fleitasarts.com)
 2. [ailab.microsoft.com](https://ailab.microsoft.com)
 3. SQL Server R Services Samples: Microsoft Repo (https://github.com/Microsoft/SQL-Server-R-Services-Samples)
