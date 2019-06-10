@@ -1,5 +1,18 @@
 ![cover](https://github.com/hfleitas/SentimentPrediction/blob/master/Cover.png "cover")
 
+## Resources 🍖
+1. [fleitasarts.com](http://fleitasarts.com)
+2. [aiilab.microsoft.com](https://ailab.microsoft.com)
+3. SQL Server R Services Samples: Microsoft Repo (https://github.com/Microsoft/SQL-Server-R-Services-Samples)
+4. Pre-Trained ML Models: [Install in SQL Server](https://docs.microsoft.com/sql/advanced-analytics/r/install-pretrained-models-sql-server)
+5. SQL Server Machine Learning Services: [Tutorials](http://aka.ms/mlsqldev)
+6. SQL Server Components to Support Python: [Interaction of Components](https://docs.microsoft.com/sql/advanced-analytics/python/new-components-in-sql-server-to-support-python-integration?view=sql-server-2017)
+7. hreading ML: [Logistic Regression](https://docs.microsoft.com/machine-learning-server/python-reference/microsoftml/rx-logistic-regression)
+8. Resource Governor: [Alter External Resource Pool](https://docs.microsoft.com/sql/advanced-analytics/r/how-to-create-a-resource-pool-for-r?view=sql-server-2017)
+9. Interactive deep learning: [Learn alert](https://aka.ms/AA3dz6b)
+10. [aka.ms/sqlworkshops](https://aka.ms/sqlworkshops)
+11. [aka.ms/ss19](https://aka.ms/ss19)
+
 # Sentiment Prediction
 ### Real-time in SQL Server
 Python and T-SQL solution for Sentiment analysis and Real-time predictions in SQL Server 2017+
