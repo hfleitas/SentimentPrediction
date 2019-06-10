@@ -2,7 +2,7 @@
 
 ## Resources 🍖
 1. [fleitasarts.com](http://fleitasarts.com)
-2. [aiilab.microsoft.com](https://ailab.microsoft.com)
+2. [ailab.microsoft.com](https://ailab.microsoft.com)
 3. SQL Server R Services Samples: Microsoft Repo (https://github.com/Microsoft/SQL-Server-R-Services-Samples)
 4. Pre-Trained ML Models: [Install in SQL Server](https://docs.microsoft.com/sql/advanced-analytics/r/install-pretrained-models-sql-server)
 5. SQL Server Machine Learning Services: [Tutorials](http://aka.ms/mlsqldev)
