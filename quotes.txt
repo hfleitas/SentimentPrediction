@@ -1,95 +1,95 @@
-The Magical Incantation that activates the Amulet: "For the glory of Merlin, Daylight is mine to command!"
-Strickler: Now, I think I know what has you so distraught, Jim. 
-Jim: You do? 
-Strickler: It's like I told you yesterday, you have a lot on your shoulders. Too much, in my opinion, for someone your age. And I think that this opportunity... 
-Jim: Chess? 
-Strickler: ...I think it's causing you anxiety. I know you want to be there for your mother, but it's as a great poet once wrote, "Do what's good for you, or you're not good for anybody." [Bell goes off.] 
-Jim: Hey thanks for the advice. I like talking to you. 
-Strickler: Always.
+ ('The Magical Incantation that activates the Amulet', 'For the glory of Merlin, Daylight is mine to command!')
+,('Strickler', 'Now, I think I know what has you so distraught, Jim.')
+,('Jim', 'You do?')
+,('Strickler', 'It''s like I told you yesterday, you have a lot on your shoulders. Too much, in my opinion, for someone your age. And I think that this opportunity...')
+,('Jim', 'Chess?')
+,('Strickler', '...I think it''s causing you anxiety. I know you want to be there for your mother, but it''s as a great poet once wrote, ""Do what''s good for you, or you''re not good for anybody."" [Bell goes off.]')
+,('Jim', 'Hey thanks for the advice. I like talking to you.')
+,('Strickler', 'Always.')
 
-Jim: So, the previous Trollhunter, what, retired?. 
-AAARRRGGHH!!!: Was felled. 
-Jim: Felled? 
-AAARRRGGHH!!!: Means killed. 
-Blinky: Turned to stone and smashed. Kanjigar the Courageous was his name. Brutally slain by a ruthless troll named Bular. 
-Tobes: Don't worry dude. This Bular guy probably just got lucky. 
-Blinky: The evidence does not suggest that. Bular is a formidable opponent. 
-Jim Then the other guy, he was just off his game or something, right? 
-Blinky: Doubtful. Kanjigar was perhaps the most alert and able of all the Trollhunters. 
-Jim: But not the best, I'm betting. 
-Blinky: Oh, the very best. Many songs and sagas have been written about him.
+,('Jim', 'So, the previous Trollhunter, what, retired?.')
+,('AAARRRGGHH!!!', 'Was felled.')
+,('Jim', 'Felled?')
+,('AAARRRGGHH!!!', 'Means killed.')
+,('Blinky', 'Turned to stone and smashed. Kanjigar the Courageous was his name. Brutally slain by a ruthless troll named Bular.')
+,('Tobes', 'Don''t worry dude. This Bular guy probably just got lucky.')
+,('Blinky', 'The evidence does not suggest that. Bular is a formidable opponent.')
+,('Jim', 'Then the other guy, he was just off his game or something, right?')
+,('Blinky', 'Doubtful. Kanjigar was perhaps the most alert and able of all the Trollhunters.')
+,('Jim', 'But not the best, I''m betting.')
+,('Blinky', 'Oh, the very best. Many songs and sagas have been written about him.')
 
-Blinky: "Destiny is a gift. Some go their entire lives, living existence as a quiet desperation. Never learning the truth that what feels as though a burden pushing down upon our shoulders, is actually, a sense of purpose that lifts us to greater heights. Never forget that fear is but the precursor to valour, that to strive and triumph in the face of fear, is what is means to be a hero. Don't think, Master Jim. Become!"
+,('Blinky', 'Destiny is a gift. Some go their entire lives, living existence as a quiet desperation. Never learning the truth that what feels as though a burden pushing down upon our shoulders, is actually, a sense of purpose that lifts us to greater heights. Never forget that fear is but the precursor to valour, that to strive and triumph in the face of fear, is what is means to be a hero. Don''t think, Master Jim. Become!')
 
-AAARRRGGHH!!!: Amulet chose. 
-Vendal: So Draal tells me... ridiculous. However, the amulet has been known to make ill-fated choices, as you know better than most. 
-Jim: What's that mean? 
-AAARRRGGHH!!!: Blinky trained Trollhunter before. Unkar "the Unfortunate." 
-Jim: Why is he unfortunate? 
-AAARRRGGHH!!!: First night out, torn. 
-Jim: Like, conflicted? 
-AAARRRGGHH!!!: No. Limb from limb. 
+,('AAARRRGGHH!!!', 'Amulet chose.')
+,('Vendal', 'So Draal tells me... ridiculous. However, the amulet has been known to make ill-fated choices, as you know better than most.')
+,('Jim', 'What''s that mean?')
+,('AAARRRGGHH!!!', 'Blinky trained Trollhunter before. Unkar ""the Unfortunate.""')
+,('Jim', 'Why is he unfortunate?')
+,('AAARRRGGHH!!!', 'First night out, torn.')
+,('Jim', 'Like, conflicted?')
+,('AAARRRGGHH!!!', 'No. Limb from limb.')
 
-Vendel: You've never met a conspiracy theory you didn't like. 
-Blinky: I hate conspiracies. That is why I am dedicates to rooting them out. 
-Vendel: Like you rooted out the plot to rid Trollmarket of all its cat meat? 
-Blinky: That was a misunderstanding. 
-Vendel: Or the time you were convinced we were infested with flea trolls? 
-Blinky: Precaution is the soul of virtue. 
-Vendel: Everyone in Troll Market thinks you're paranoid. 
-Blinky: If it's everyone, it must be a conspiracy!
+,('Vendel', 'You''ve never met a conspiracy theory you didn''t like.')
+,('Blinky', 'I hate conspiracies. That is why I am dedicates to rooting them out.')
+,('Vendel', 'Like you rooted out the plot to rid Trollmarket of all its cat meat?')
+,('Blinky', 'That was a misunderstanding.')
+,('Vendel', 'Or the time you were convinced we were infested with flea trolls?')
+,('Blinky', 'Precaution is the soul of virtue.')
+,('Vendel', 'Everyone in Troll Market thinks you''re paranoid.')
+,('Blinky', 'If it''s everyone, it must be a conspiracy!')
 
-Jim: Sixteenth birthday, but do I get a Vespa? No. I get a food processor and a killer flying troll!
-Barbara Lake: I don't care what you're doing, but if you're not out of my house in five-seconds, I have an orange belt in Krav Maga, and I will not hesitate to use it.
-Vendel: You humans cut stones to unlock their beauty, but trolls cut stones to unlock their power.
-Blinky: Ah! Powers of this device are limited to three rules. According to the inscription, if my Salickacious is correct, the first is that only one person can step outside of time. 
-Toby: Oh. 
-Blinky: Secondly, the time-stopping effect lasts for precisely 43 minutes and 9 seconds. 
-Claire: And the third? 
-Blinky: You can only use it, uh… three times. Well! Now, we know the rules! 
-Toby: Wait! You just used that thing, like, twice! 
-Blinky: Well the first was to test its ability and the second, to demonstrate it to all of you. 
-Jim: Blink, you wasted our shots! 
+,('Jim', 'Sixteenth birthday, but do I get a Vespa? No. I get a food processor and a killer flying troll!')
+,('Barbara Lake', 'I don''t care what you''re doing, but if you''re not out of my house in five-seconds, I have an orange belt in Krav Maga, and I will not hesitate to use it.')
+,('Vendel', 'You humans cut stones to unlock their beauty, but trolls cut stones to unlock their power.')
+,('Blinky', 'Ah! Powers of this device are limited to three rules. According to the inscription, if my Salickacious is correct, the first is that only one person can step outside of time.')
+,('Toby', 'Oh.')
+,('Blinky', 'Secondly, the time-stopping effect lasts for precisely 43 minutes and 9 seconds.')
+,('Claire', 'And the third?')
+,('Blinky', 'You can only use it, uh… three times. Well! Now, we know the rules!')
+,('Toby', 'Wait! You just used that thing, like, twice!')
+,('Blinky', 'Well the first was to test its ability and the second, to demonstrate it to all of you.')
+,('Jim', 'Blink, you wasted our shots!')
 
-Magical Incantation that appears on the Amulet: For the doom of Gunmar, Eclipse is mine to command!
+,('Magical Incantation that appears on the Amulet', 'For the doom of Gunmar, Eclipse is mine to command!')
 
-Blinky: Not a rock. Dwärkstone. 
-Jim: Dork-stone? 
-Blinky: Dwärkstone. 
-Claire: Dork-stone? 
-Aaarrrgghh!!!: Close enough. 
-Blinky: Dwärkstone is incredibly rare, highly volatile, and the only guaranteed way to expel a gruesome. 
-Toby: All I'm hearing is "dork-stone."
+,('Blinky', 'Not a rock. Dwärkstone.')
+,('Jim', 'Dork-stone?')
+,('Blinky', 'Dwärkstone.')
+,('Claire', 'Dork-stone?')
+,('Aaarrrgghh!!!', 'Close enough.')
+,('Blinky', 'Dwärkstone is incredibly rare, highly volatile, and the only guaranteed way to expel a gruesome.')
+,('Toby', 'All I''m hearing is ""dork-stone.""')
 
-Otto: And once the vicious one realizes he has no further use for an old, blind troll… I— Well.. [Does the Throat-Slitting Gesture.] 
-Dictatious: …well, what? You know I can't see. 
-Otto: Oh. I moves my thumb across my throat. It is, as we say, a killing motion.
+,('Otto', 'And once the vicious one realizes he has no further use for an old, blind troll… I— Well.. [Does the Throat-Slitting Gesture.]')
+,('Dictatious', '…well, what? You know I can''t see.')
+,('Otto', 'Oh. I moves my thumb across my throat. It is, as we say, a killing motion.')
 
-Claire: Let's try “good cop, bad cop.” 
-Blinky: I think I know where you’re going with this. I shall play this game.[Claire knocks on door] Open up, RotGut, or I'll kick down this door! [RotGut answers.] 
-Gut: Ailment or curse? 
-Claire: Neither, you two-headed dirtbag! We need information. Gunmar’s got a mole down here, and you're gonna tell us who it is! 
-Rot: Why is she being so mean to us, Gut? 
-Gut: We don't share this sort of thing. Salesman-client confidentiality. 
-Claire: Oh, you wanna obstruct official Trollhunting business? Is that what you wanna do? Now you've done it! I feel my anger rising. I can't control it. You might want to talk to my partner, because I'm about to explode! [Claire winks to Blinky. He winks back.] 
-Blinky: Ahem. [Blinky shouts and pulls out a live dwärkstone.] If you don't tell us what we need to know this instant, I'm turning us all into a smoking crater! [RotGut shuts their windows.] 
-Gut: Are you insane? You're gonna kill us all! 
-Claire: Whoa whoa, Blinky, what are you doing? 
-Blinky: I’m buying baby. I’m buying the farm if they don’t start talking! 
-Claire: Wait, I thought I was the bad cop. 
-Blinky: I thought I was the bad cop. Your performance felt a little ho-hum.
-Draal: It has been my honor ... fleshbag.
+,('Claire', 'Let''s try "good cop, bad cop."')
+,('Blinky', 'I think I know where you’re going with this. I shall play this game.[Claire knocks on door] Open up, RotGut, or I''ll kick down this door! [RotGut answers.]')
+,('Gut', 'Ailment or curse?')
+,('Claire', 'Neither, you two-headed dirtbag! We need information. Gunmar’s got a mole down here, and you''re gonna tell us who it is!')
+,('Rot', 'Why is she being so mean to us, Gut?')
+,('Gut', 'We don''t share this sort of thing. Salesman-client confidentiality.')
+,('Claire', 'Oh, you wanna obstruct official Trollhunting business? Is that what you wanna do? Now you''ve done it! I feel my anger rising. I can''t control it. You might want to talk to my partner, because I''m about to explode! [Claire winks to Blinky. He winks back.]')
+,('Blinky', 'Ahem. [Blinky shouts and pulls out a live dwärkstone.] If you don''t tell us what we need to know this instant, I''m turning us all into a smoking crater! [RotGut shuts their windows.]')
+,('Gut', 'Are you insane? You''re gonna kill us all!')
+,('Claire', 'Whoa whoa, Blinky, what are you doing?')
+,('Blinky', 'I''m buying baby. I''m buying the farm if they don''t start talking!')
+,('Claire', 'Wait, I thought I was the bad cop.')
+,('Blinky', 'I thought I was the bad cop. Your performance felt a little ho-hum.')
+,('Draal', 'It has been my honor ... fleshbag.')
 
-Claire: Let's try "good cop, bad cop." 
-Blinky: I think I know where you’re going with this. I shall play this game.[Claire knocks on door] Open up, RotGut, or I'll kick down this door! [RotGut answers.] 
-Gut: Ailment or curse? 
-Claire: Neither, you two-headed dirtbag! We need information. Gunmar’s got a mole down here, and you're gonna tell us who it is! 
-Rot: Why is she being so mean to us, Gut? 
-Gut: We don't share this sort of thing. Salesman-client confidentiality. 
-Claire: Oh, you wanna obstruct official Trollhunting business? Is that what you wanna do? Now you've done it! I feel my anger rising. I can't control it. You might want to talk to my partner, because I'm about to explode! [Claire winks to Blinky. He winks back.] 
-Blinky: Ahem. [Blinky shouts and pulls out a live dwärkstone.] If you don't tell us what we need to know this instant, I'm turning us all into a smoking crater! [RotGut shuts their windows.] 
-Gut: Are you insane? You're gonna kill us all! 
-Claire: Whoa whoa, Blinky, what are you doing? 
-Blinky: I’m buying baby. I'm buying the farm if they don't start talking! 
-Claire: Wait, I thought I was the bad cop. 
-Blinky: I thought I was the bad cop. Your performance felt a little ho-hum.
+,('Claire', 'Let''s try "good cop, bad cop."')
+,('Blinky', 'I think I know where you''re going with this. I shall play this game. [Claire knocks on door] Open up, RotGut, or I''ll kick down this door! [RotGut answers.]')
+,('Gut', 'Ailment or curse?')
+,('Claire', 'Neither, you two-headed dirtbag! We need information. Gunmar''s got a mole down here, and you''re gonna tell us who it is!')
+,('Rot', 'Why is she being so mean to us, Gut?')
+,('Gut', 'We don''t share this sort of thing. Salesman-client confidentiality.')
+,('Claire', 'Oh, you wanna obstruct official Trollhunting business? Is that what you wanna do? Now you''ve done it! I feel my anger rising. I can''t control it. You might want to talk to my partner, because I''m about to explode! [Claire winks to Blinky. He winks back.]')
+,('Blinky', 'Ahem. [Blinky shouts and pulls out a live dwärkstone.] If you don''t tell us what we need to know this instant, I''m turning us all into a smoking crater! [RotGut shuts their windows.]')
+,('Gut', 'Are you insane? You''re gonna kill us all!')
+,('Claire', 'Whoa whoa, Blinky, what are you doing?')
+,('Blinky', 'I’m buying baby. I''m buying the farm if they don''t start talking!')
+,('Claire', 'Wait, I thought I was the bad cop.')
+,('Blinky', 'I thought I was the bad cop. Your performance felt a little ho-hum.')
