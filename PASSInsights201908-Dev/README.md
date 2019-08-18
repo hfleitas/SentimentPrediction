@@ -6,6 +6,7 @@
 * [fleitasarts.com](http://fleitasarts.com)
 * [github.com/hfleitas/SentimentPrediction](https://github.com/hfleitas/SentimentPrediction)
 * [netflix.com/trollhunters](https://netflix.com/trollhunters)
+* Text Analytics API (v3.0-Preview)](https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-preview)
 * SQL Server Machine Learning Services: [Tutorials](http://aka.ms/mlsqldev)
 * Interactive deep learning: [Learn alert](https://aka.ms/AA3dz6b)
 * [aka.ms/sqlworkshops](https://aka.ms/sqlworkshops)
