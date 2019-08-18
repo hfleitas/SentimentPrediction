@@ -9,7 +9,7 @@
 * Format Query Results as JSON with FOR JSON [(SQL Server)](https://docs.microsoft.com/sql/relational-databases/json/format-query-results-as-json-with-for-json-sql-server?view=sql-server-2017#output-of-the-for-json-clause)
 * Using the Python REST API to call the Text Analytics Cognitive Service: [Quickstart](https://docs.microsoft.com/azure/cognitive-services/text-analytics/quickstarts/python)
 * Detect sentiment with Text Analytics: [Example](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis)
-* Text Analytics API (v3.0-Preview)](https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-preview)
+* Text Analytics API [(v3.0-Preview)](https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-preview)
 * SQL Server Machine Learning Services: [Tutorials](http://aka.ms/mlsqldev)
 * Interactive deep learning: [Learn alert](https://aka.ms/AA3dz6b)
 * [aka.ms/sqlworkshops](https://aka.ms/sqlworkshops)
