@@ -6,6 +6,8 @@
 * [fleitasarts.com](http://fleitasarts.com)
 * [github.com/hfleitas/SentimentPrediction](https://github.com/hfleitas/SentimentPrediction)
 * [netflix.com/trollhunters](https://netflix.com/trollhunters)
+* Quickstart: (Using the Python REST API to call the Text Analytics Cognitive Service)[https://docs.microsoft.com/azure/cognitive-services/text-analytics/quickstarts/python]
+* Example: (Detect sentiment with Text Analytics)[https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis]
 * Text Analytics API (v3.0-Preview)](https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-preview)
 * SQL Server Machine Learning Services: [Tutorials](http://aka.ms/mlsqldev)
 * Interactive deep learning: [Learn alert](https://aka.ms/AA3dz6b)
