@@ -1,4 +1,4 @@
-# Get Cognitive API
+# PASS Insights
 ![cover](https://github.com/hfleitas/SentimentPrediction/blob/master/PASSInsights201908-Dev/cover.png)
 
 ## Resources
