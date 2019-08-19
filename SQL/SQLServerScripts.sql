@@ -25,8 +25,8 @@ begin
 	create login ['+ @@servername +'\SQLRUserGroup] from windows
 end
 grant EXECUTE ANY EXTERNAL SCRIPT to ['+ @@servername +'\SQLRUserGroup];
-alter server role sysadmin add member ['+ @@servername +'\SQLRUserGroup];
-use tpcxbb_1gb;
+--alter server role sysadmin add member ['+ @@servername +'\SQLRUserGroup];
+use FleitasArts;
 if not exists (select 1 from sysusers where name ='''+ @@servername +'\SQLRUserGroup'')
 begin
 	create user ['+ @@servername +'\SQLRUserGroup] from login ['+ @@servername +'\SQLRUserGroup];
