@@ -23,6 +23,7 @@
 * [pass.org/summit](https://www.pass.org/summit/2019/Learn/SpeakerDetails.aspx?spid=4116)
 
 ### Comparisons
+*Note:* I found Microsoft Azure Cognitive Text Analytics to be the best one.
 
 * Microsoft Azure Cognitive Text Analytics: [Demo](https://azure.microsoft.com/services/cognitive-services/text-analytics/)
 * Microsoft Azure Cognitive Text Analytics: [Language support list & status](https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support#language-list-and-status)
@@ -34,4 +35,3 @@
 * Google Cloud Natural Language API: [Demo](https://cloud.google.com/natural-language)
 * Google Cloud AI & ML Products: Cloud Natural Language API - Sentiment Analysis [Language Support](https://cloud.google.com/natural-language/docs/languages)
 
-#### Note: I found Microsoft Azure Cognitive Text Analytics to be the best one.
