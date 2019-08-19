@@ -1,4 +1,4 @@
-# rig
+# Get Cognitive API
 ![cover](https://github.com/hfleitas/SentimentPrediction/blob/master/PASSInsights201908-Dev/cover.png)
 
 ## Resources
