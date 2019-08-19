@@ -1,18 +1,19 @@
 create or alter proc GetTrollhunterModel (
 	@Name nvarchar(30) = 'TrollhunterRealtime',
 	@Languange varchar(30) = 'Python',
+	@Svr varchar(128) = 'localhost',
 	@Db	nvarchar(128) = 'FleitasArts'
 )
 as	
 	declare @model varbinary(max), @train_script nvarchar(max);
-	delete top(1) from models where name=@Name and language = @Languange;
+	delete top(1) from models where name = @Name and language = @Languange;
 	
 	--The Python script we want to execute
 	set @train_script = N'
 from microsoftml import rx_logistic_regression, featurize_text, n_gram
 from revoscalepy import rx_serialize_model, RxOdbcData, rx_write_object, RxInSqlServer, rx_set_compute_context, RxLocalSeq
 
-connection_string = "Driver=SQL Server;Server=localhost;Database='+@Db+';Trusted_Connection=true;"
+connection_string = "Driver=SQL Server;Server='+@Svr+';Database='+@Db+';Trusted_Connection=true;"
 dest = RxOdbcData(connection_string, table = "models")
  
 training_data["tag"] = training_data["tag"].astype("category")
