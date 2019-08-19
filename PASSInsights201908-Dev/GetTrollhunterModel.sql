@@ -35,6 +35,6 @@ rx_write_object(dest, key_name="Name", key="'+@Name+'", value_name="Model", valu
 		,@input_data_1_name = N'training_data'
 go
 
-exec  GetTrollhunterModel; --00:00:02.919 home desktop.
+exec  GetTrollhunterModel; --00:00:05.516 home desktop.
 
 select *, datalength(model) as Datalen from dbo.models; 

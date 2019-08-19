@@ -22,13 +22,14 @@
 * [aka.ms/ss19](https://aka.ms/ss19)
 * [pass.org/summit](https://www.pass.org/summit/2019/Learn/SpeakerDetails.aspx?spid=4116)
 
-### Resources for Comparisons
+### Comparisons
+#### Note: I found Microsoft Azure Cognitive Text Analytics to be the best one.
 
-* Microsoft Azure: Cognitive Text Analytics [Demo](https://azure.microsoft.com/services/cognitive-services/text-analytics/)
-* Microsoft Azure: Cognitive Text Analytics - [Language support list and status](https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support#language-list-and-status)
-* AWS: Amazon Comprehend Real-time analysis [Demo](https://console.aws.amazon.com/comprehend/v2/home)
-* AWS: Amazon Comprehend can examime and analyze documents in these [languages](https://docs.aws.amazon.com/comprehend/latest/dg/supported-languages.html).
-* AWS: What is Amazon Comprehend - [Languages Supported](https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html)
+* Microsoft Azure Cognitive Text Analytics: [Demo](https://azure.microsoft.com/services/cognitive-services/text-analytics/)
+* Microsoft Azure Cognitive Text Analytics: [Language support list & status](https://docs.microsoft.com/azure/cognitive-services/text-analytics/language-support#language-list-and-status)
+* AWS Amazon Comprehend Real-time Analysis: [Demo](https://console.aws.amazon.com/comprehend/v2/home)
+* AWS Amazon Comprehend: [Examime and analyze documents in these languages](https://docs.aws.amazon.com/comprehend/latest/dg/supported-languages.html).
+* AWS What is Amazon Comprehend: [Languages Supported](https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html)
 * IBM Watson Natural Language Understanding: [Demo](https://www.ibm.com/watson/services/natural-language-understanding/)
 * IBM Cloud Watson Natural Lanaguage Understanding: [Analyze text - Response - SentimentResult](https://cloud.ibm.com/apidocs/natural-language-understanding#analyze-text)
 * Google Cloud Natural Language API: [Demo](https://cloud.google.com/natural-language)
