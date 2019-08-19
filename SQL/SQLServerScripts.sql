@@ -20,18 +20,19 @@ reconfigure with override
 go
 
 declare @sql nvarchar(max);
-select @sql = N'if not exists (select 1 from syslogins where name ='''+ @@servername +'\SQLRUserGroup'')
+-- only need to grant connect permissions!
+select @sql = N'if not exists (select 1 from syslogins where name ='''+ @@servername +'\SQLRUserGroup'') 
 begin
 	create login ['+ @@servername +'\SQLRUserGroup] from windows
 end
-grant EXECUTE ANY EXTERNAL SCRIPT to ['+ @@servername +'\SQLRUserGroup];
+--grant EXECUTE ANY EXTERNAL SCRIPT to ['+ @@servername +'\SQLRUserGroup];
 --alter server role sysadmin add member ['+ @@servername +'\SQLRUserGroup];
-use FleitasArts;
-if not exists (select 1 from sysusers where name ='''+ @@servername +'\SQLRUserGroup'')
-begin
-	create user ['+ @@servername +'\SQLRUserGroup] from login ['+ @@servername +'\SQLRUserGroup];
-end
-alter role db_datawriter add member ['+ @@servername +'\SQLRUserGroup]'
+--use FleitasArts;
+--if not exists (select 1 from sysusers where name ='''+ @@servername +'\SQLRUserGroup'')
+--begin
+--	create user ['+ @@servername +'\SQLRUserGroup] from login ['+ @@servername +'\SQLRUserGroup];
+--end
+--alter role db_datawriter add member ['+ @@servername +'\SQLRUserGroup]' 
 print @sql; exec sp_executesql @sql;
 go
 -- Restart SQL Service & LAUNCHPAD.
