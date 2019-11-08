@@ -12,7 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>Python</Name>
     <RootNamespace>Python</RootNamespace>
-    <InterpreterId>Global|VisualStudio|SQLServer2019</InterpreterId>
+    <InterpreterId>Global|VisualStudio|PYTHON_SERVICES</InterpreterId>
     <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -40,12 +40,16 @@
     <Content Include="PS-CMD\microsoft-machine-learning-algorithm-cheat-sheet-v6.pdf" />
     <Content Include="PS-CMD\Performance_20180605.vsp" />
     <Content Include="PS-CMD\UpgradingRequirements.txt" />
+    <Content Include="requirements.txt" />
     <Content Include="SQL\SQLMLVersions-Troubleshooting.sql" />
     <Content Include="SQL\SQLServerScripts.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="PS-CMD\" />
     <Folder Include="SQL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|VisualStudio|PYTHON_SERVICES" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

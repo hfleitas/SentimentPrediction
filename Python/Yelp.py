@@ -2,8 +2,8 @@
 import requests
  
 # Replace [app_id] with the App ID and [app_secret] with the App Secret
- app_id = 'fp4o2wDF6FEzfrc1TWBQVA'
- app_secret = 'mBWWL0UKTLCFRaW7bp7n8ltlJE79SvQXirCronnLevqW6IZbeVYDw7FYrhQmMDNSovGS7G62hqK6Y1nnk3iIht3C3EHLp7eDdr2uC6qR4FniDs9I6awrKBZ6BaRgW3Yx'
+ app_id = ''
+ app_secret = ''
  data = {'grant_type': 'client_credentials',
          'client_id': app_id,
          'client_secret': app_secret}
