@@ -62,7 +62,7 @@ kiwisolver==1.0.1
 liac-arff==2.4.0
 llvmlite==0.27.0
 locket==0.2.0
-lxml==4.3.0
+lxml==4.6.3
 MarkupSafe==1.1.1
 matplotlib==3.0.2
 menuinst==1.4.14
