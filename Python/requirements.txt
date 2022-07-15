@@ -29,7 +29,7 @@ datashape==0.5.4
 decorator==4.4.0
 defusedxml==0.6.0
 dill==0.2.8.2
-distributed==1.26.0
+distributed==2021.10.0
 distro==1.4.0
 docutils==0.14
 dotnetcore2==2.1.8.1
