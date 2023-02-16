@@ -115,7 +115,7 @@ pycparser==2.19
 pycrypto==2.6.1
 pycurl==7.43.0.2
 Pygments==2.7.4
-PyJWT==1.7.1
+PyJWT==2.4.0
 pyodbc==4.0.25
 pyOpenSSL==18.0.0
 pyparsing==2.3.1
