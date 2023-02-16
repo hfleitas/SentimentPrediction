@@ -164,7 +164,7 @@ unicodecsv==0.14.1
 urllib3==1.26.5
 wcwidth==0.1.7
 webencodings==0.5.1
-Werkzeug==0.14.1
+Werkzeug==2.2.3
 wheel==0.38.1
 widgetsnbextension==3.5.1
 wincertstore==0.2
