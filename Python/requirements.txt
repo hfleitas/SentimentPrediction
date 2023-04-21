@@ -150,7 +150,7 @@ sparkmagic==0.12.9
 Sphinx==1.8.2
 sphinxcontrib-websupport==1.1.0
 SQLAlchemy==1.3.0
-sqlparse==0.2.4
+sqlparse==0.4.4
 statsmodels==0.9.0
 sympy==1.3
 tables==3.5.1
